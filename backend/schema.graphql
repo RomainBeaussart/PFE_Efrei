@@ -1,0 +1,13 @@
+directive @hasRight(right: String) on OBJECT | FIELD | FIELD_DEFINITION
+directive @mutationHasRight(right: String) on FIELD | FIELD_DEFINITION
+
+scalar Json
+scalar DateTime
+
+type Query {
+
+}
+
+type Mutation {
+
+}
