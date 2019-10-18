@@ -39,6 +39,8 @@ VUE_APP_GRAPHQL_WS=
 VUE_APP_BACKEND=
 ```
 
+**These settings are personnal and private. You'll have to fill them with your datas**
+
 ## Run the application
 
 ### 1. Start linked services with Docker

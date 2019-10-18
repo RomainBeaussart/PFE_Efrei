@@ -1,6 +1,6 @@
 <template>
 <v-container>
-    Home
+    Home {{ user.username }}
     <v-btn
         rounded
         @click="logout()"
@@ -14,6 +14,10 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 @Component
 export default class Home extends Vue {
     
+    get user() {
+        return this.$store.state.user
+    }
+
     mounted() {
         console.log(this.$store.state.user)
     }
