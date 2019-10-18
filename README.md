@@ -26,7 +26,6 @@ $ npm install
 
 ### 1. Start linked services with Docker
 ```sh
-$ docker
 $ cd backend/prisma
 $ docker-compose up -d
 ```
