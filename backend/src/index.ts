@@ -11,14 +11,16 @@ import bodyParser from 'body-parser'
 import { URL } from 'url';
 import { mergeTypes } from 'merge-graphql-schemas'
 import {readFileSync} from 'fs';
+import { getUserId } from './helpers/user';
 
-import { AccessRightDirective } from './helpers/graphQLDirectives';
+import { AccessRightDirective } from './helpers/graphQLDirectives'
+
+import user from './resolvers/user'
 
 import { Prisma } from '../prisma/generated/prisma-client'
 
 const forwardedRequests = [
     //! Queries
-    "Query.user", "Query.users",
 
     //! Mutations
     "Mutation.createUser", "Mutation.updateUser", "Mutation.deleteUser"
@@ -26,10 +28,10 @@ const forwardedRequests = [
 
 const resolvers = {
     Query: {
-        
+        ...user.Query
     },
     Mutation: {
-        
+        ...user.Mutation
     },
 
     Subscription: {
@@ -38,8 +40,10 @@ const resolvers = {
 }
 
 const checkUserMiddleware = (resolve, root, args, context, info) => {
-    if (info.parentType == "Query" || info.parentType == "Mutation" || info.parentType == "Subscription") {
-
+    if ((info.parentType == "Query" || info.parentType == "Mutation" || info.parentType == "Subscription") &&
+        info.fieldName !== "login" &&
+        info.fieldName !== "signup") {
+        context.userId = getUserId(context)
     }
 
     return resolve(root, args, context, info)
@@ -55,9 +59,8 @@ let binding = new PrismaBinding({
     endpoint: `${process.env.PRISMA_ENDPOINT}/${process.env.PRISMA_SERVICE}/${process.env.PRISMA_STAGE}`
 });
 
-// décommenter poour ajouter un resolver
 const server = new GraphQLServer({
-    typeDefs: mergeTypes([readFileSync('./prisma/generated/prisma.graphql').toString() /*readFileSync('./schema.graphql').toString()*/], { all: true }),
+    typeDefs: mergeTypes([readFileSync('./prisma/generated/prisma.graphql').toString(), readFileSync('./schema.graphql').toString()], { all: true }),
     resolvers,
     schemaDirectives: {
         hasRight: AccessRightDirective

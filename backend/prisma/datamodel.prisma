@@ -1,8 +1,7 @@
-#import * from "./generated/prisma.graphql"
-
 type User {
-  id: ID! @id
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
-  name: String
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+    username: String @unique
+    password: String
 }

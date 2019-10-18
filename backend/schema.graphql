@@ -5,9 +5,19 @@ scalar Json
 scalar DateTime
 
 type Query {
-
+    loggedInUser: User
 }
 
 type Mutation {
+    login(data: LoginInput!): UserAuthPayload
+}
 
+input LoginInput {
+    username: String!
+    password: String!
+}
+
+type UserAuthPayload {
+    token: String!
+    user: User!
 }

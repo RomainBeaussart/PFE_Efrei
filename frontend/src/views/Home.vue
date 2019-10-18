@@ -1,38 +1,28 @@
 <template>
 <v-container>
-    {{ text }}
+    Home
     <v-btn
-        @click="test()"
-    > Test </v-btn>
+        rounded
+        @click="logout()"
+    > Disconnect </v-btn>
 </v-container>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import gql from "graphql-tag";
-import { Apollo } from '../decorators'
-
-import USERS from '../graphql/Users.gql'
+<script>
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class Home extends Vue {
-
-    text: string = "This is a test"
-
-    async test() {
-        const res: any = await this.$apollo.query({
-            query: USERS
-        })
-        console.log(res)
+    
+    mounted() {
+        console.log(this.$store.state.user)
     }
 
-    @Apollo({
-        query: USERS,
-        result({ data, loading, networkStatus }: any) {
-            if (!loading) {
-                console.log(data)
-            }
-        }
-    })
+    logout() {
+        localStorage.removeItem("apollo-token");
+        this.$store.commit("logoutUser");
+        location.reload();
+    }
+
 }
 </script>

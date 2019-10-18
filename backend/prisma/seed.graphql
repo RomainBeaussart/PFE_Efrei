@@ -1,5 +1,6 @@
 mutation {
 user1: createUser(data: {
-    name: "Romain"
+    username: "Romain"
+    password: "Test"
   }) { id }
 }

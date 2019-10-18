@@ -14,7 +14,7 @@ export default new Vuex.Store<RootState>({
     state: {
         user: {
             id: '',
-            name: '',
+            username: '',
             createdAt: '',
             updatedAt: ''
         }
@@ -26,7 +26,7 @@ export default new Vuex.Store<RootState>({
         logoutUser(state) {
             state.user = {
                 id: '',
-                name: '',
+                username: '',
                 createdAt: '',
                 updatedAt: ''
             }
