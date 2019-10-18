@@ -20,10 +20,6 @@ export default new Vuetify({
                 secondary: '#6DC0BD',
                 accent: '#8c9eff',
                 error: '#F44336',
-                blue_custom: '#1c233f',
-                yellow_custom: '#fad282',
-                green_custom: '#6DC0BD',
-                dark_grey: "#EDEDED"
             }
         }
     }

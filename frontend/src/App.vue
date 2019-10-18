@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <router-view class="body"></router-view>
+    <router-view></router-view>
   </v-app>
 </template>
 
@@ -14,6 +14,6 @@ export default class App extends Vue {
     }
 }
 </script>
-<style lang="scss">
+<style>
 
 </style>

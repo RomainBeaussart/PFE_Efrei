@@ -2,7 +2,7 @@
 <v-container>
     Home {{ user.username }}
     <v-btn
-        rounded
+        elevation="0"
         @click="logout()"
     > Disconnect </v-btn>
 </v-container>
@@ -16,16 +16,6 @@ export default class Home extends Vue {
     
     get user() {
         return this.$store.state.user
-    }
-
-    mounted() {
-        console.log(this.$store.state.user)
-    }
-
-    logout() {
-        localStorage.removeItem("apollo-token");
-        this.$store.commit("logoutUser");
-        location.reload();
     }
 
 }

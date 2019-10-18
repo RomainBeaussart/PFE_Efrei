@@ -1,31 +1,37 @@
 <template>
     <v-container>
-        <v-layout xs6 class="justify-center">
-            <v-flex xs6>
-                <p class="display-2">
-                    Na Mo Naki
-                </p>
-                <v-text-field
-                    v-model="username"
-                    label="Email ou pseudo"
-                    outlined
-                ></v-text-field>
-                <v-text-field
-                    v-model="password"
-                    label="Mot de passe"
-                    :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
-                    :type="passwordShow ? 'text' : 'password'"
-                    @click:append="passwordShow = !passwordShow"
-                    outlined
-                ></v-text-field>
-                <v-btn
-                    elevation="0"
-                    @click="login()"
-                > S'identifier
-                </v-btn>
-                {{ error }}
-            </v-flex>
-        </v-layout>
+        <v-card
+            elevation="0"
+            width="60%"
+        >
+            <v-layout xs6 pa-5>
+                <v-flex xs12>
+                    <p class="display-2">
+                        Na Mo Naki
+                    </p>
+                    <v-text-field
+                        v-model="username"
+                        label="Email ou pseudo"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="password"
+                        label="Mot de passe"
+                        :append-icon="passwordShow ? 'visibility' : 'visibility_off'"
+                        :type="passwordShow ? 'text' : 'password'"
+                        @click:append="passwordShow = !passwordShow"
+                        outlined
+                    ></v-text-field>
+                    <v-btn
+                        elevation="0"
+                        @click="login()"
+                    >
+                        S'identifier
+                    </v-btn>
+                    {{ error }}
+                </v-flex>
+            </v-layout>
+        </v-card>
     </v-container>
 </template>
 
@@ -75,10 +81,6 @@ export default class Login extends Vue {
             this.error = "Vérifiez votre email et mot de passe"
             this.loading = false
         }
-    }
-
-    mounted() {
-        console.log(this.$store.state)
     }
 
     @Watch('username')
