@@ -22,6 +22,23 @@ Run this command in both `/backend` and `/vue` directories
 $ npm install
 ```
 
+### 3. Create and configure environement files
+Create a `.env` file in `/backend` :
+```
+PRISMA_ENDPOINT=
+PRISMA_SERVICE=
+PRISMA_STAGE=
+JWT_SECRET=
+FRONT_URL=
+```
+
+Create another `.env` file in `/vue` :
+```
+VUE_APP_GRAPHQL_HTTP=
+VUE_APP_GRAPHQL_WS=
+VUE_APP_BACKEND=
+```
+
 ## Run the application
 
 ### 1. Start linked services with Docker
