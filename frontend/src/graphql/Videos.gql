@@ -1,0 +1,3 @@
+query Videos {
+    videos {id name display {medium trailer} }
+}

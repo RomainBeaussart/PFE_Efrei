@@ -9,6 +9,7 @@ import router from './router';
 import store from './store/store';
 
 import { createProvider } from './vue-apollo'
+import VideoBg from './components/VideoBackground.vue'
 
 //
 // end register
@@ -20,6 +21,7 @@ Vue.config.productionTip = false;
 
 Vue.use(VueApollo)
 Vue.component('file-upload', VueUploadComponent)
+Vue.component('video-bg', VideoBg)
 
 new Vue({
     router,

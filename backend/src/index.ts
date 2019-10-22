@@ -21,6 +21,8 @@ import { Prisma } from '../prisma/generated/prisma-client'
 
 const forwardedRequests = [
     //! Queries
+    "Query.usersConnection",
+    "Query.videos", "Query.videos",
 
     //! Mutations
     "Mutation.createUser", "Mutation.updateUser", "Mutation.deleteUser"
@@ -62,9 +64,6 @@ let binding = new PrismaBinding({
 const server = new GraphQLServer({
     typeDefs: mergeTypes([readFileSync('./prisma/generated/prisma.graphql').toString(), readFileSync('./schema.graphql').toString()], { all: true }),
     resolvers,
-    schemaDirectives: {
-        hasRight: AccessRightDirective
-    },
     middlewares: [bindingForwardMiddleware, checkUserMiddleware],
     context: (c) => {
         return {

@@ -11,7 +11,7 @@
                     </p>
                     <v-text-field
                         v-model="username"
-                        label="Email ou pseudo"
+                        label="Login"
                         outlined
                     ></v-text-field>
                     <v-text-field
@@ -39,7 +39,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import gql from "graphql-tag";
 import { Apollo } from '../decorators'
-import sha256 from "js-sha256"
+import { sha256 } from "js-sha256"
 import store from "../store/store"
 
 import AUTHENTICATE_USER from '../graphql/auth/AuthenticateUser.gql'
@@ -58,11 +58,12 @@ export default class Login extends Vue {
     async login() {
         try {
             this.loading = true
+            console.log(sha256(this.password))
             const result = await this.$apollo.mutate({
                 mutation: AUTHENTICATE_USER,
                 variables: {
                     username: this.username,
-                    password: this.password
+                    password: sha256(this.password)
                 }
             })
 
@@ -78,7 +79,7 @@ export default class Login extends Vue {
                 }
             }
         } catch (e) {
-            this.error = "Vérifiez votre email et mot de passe"
+            this.error = "Vérifiez votre login et mot de passe"
             this.loading = false
         }
     }
@@ -89,3 +90,4 @@ export default class Login extends Vue {
 
 }
 </script>
+

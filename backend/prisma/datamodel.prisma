@@ -4,4 +4,36 @@ type User {
     updatedAt: DateTime! @updatedAt
     username: String @unique
     password: String
+    firstname: String
+    lastname: String
 }
+
+type Video {
+    id: ID! @id
+    name: String!
+    url: String!
+    display: Display! @relation(name: "VideoDisplay" link: INLINE)
+    season: Season @relation(name: "SeasonVideo")
+}
+
+type Display {
+    id: ID! @id
+    trailer: String
+    big: String
+    medium: String
+    small: String
+}
+
+type Serie {
+    id: ID! @id
+    name: String!
+    display: Display @relation(name: "SerieDisplay" link: INLINE)
+    seasons: [Season!]! @relation(name: "SerieSeasons")
+}
+
+type Season {
+    id: ID! @id
+    name: String
+    episodes: [Video!]! @relation(name: "SeasonVideo")
+}
+

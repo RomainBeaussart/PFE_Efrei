@@ -25,7 +25,7 @@ module.exports = {
         "import/prefer-default-export": 0,
         "import/extensions": 0,
         "import/no-unresolved": 0,
-        "import/no-extraneous-dependencies": ["error", { devDependencies: true, optionalDependencies: true, peerDependencies: true }],
+        "import/no-extraneous-dependencies": 0,
         "object-curly-newline": 0,
         indent: ["warn", 4, { ArrayExpression: "first" }],
         test: /\.styl$/,

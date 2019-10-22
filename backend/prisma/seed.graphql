@@ -1,6 +1,89 @@
 mutation {
+
+    ### Users
 user1: createUser(data: {
     username: "Romain"
-    password: "Test"
-  }) { id }
+    firstname: "Romain"
+    lastname: "Beaussart"
+    password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+}) { id }
+
+user2: createUser(data: {
+    username: "Jimmy"
+    firstname: "Jimmy"
+    lastname: "Clabault"
+    password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+}) { id }
+
+user3: createUser(data: {
+    username: "Edouard"
+    firstname: "Edouard"
+    lastname: "Desmyter"
+    password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+}) { id }
+
+user4: createUser(data: {
+    username: "Guillaume"
+    firstname: "Guillaume"
+    lastname: "Aprin"
+    password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+}) { id }
+
+
+    ### Movies
+
+movie1: createVideo(data: {
+    name: "Joker"
+    url:"Test"
+    display: {
+        create: {
+            medium: "http://fr.web.img4.acsta.net/pictures/19/08/29/09/20/1546400.jpg",
+            trailer: "http://fr.vid.web.acsta.net/nmedia/33/19/08/28/18//19585375_hd_013.mp4"
+        }
+    }
+}) { id }
+
+movie2: createVideo(data: {
+    name: "Maleficient"
+    url:"Test"
+    display: {
+        create: {
+            medium: "http://fr.web.img6.acsta.net/r_1280_720/newsv7/19/09/04/10/22/57384510.jpg",
+            trailer: "http://fr.vid.web.acsta.net/nmedia/33/19/07/08/15//19584770_hd_013.mp4"
+        }
+    }
+}) { id }
+
+movie3: createVideo(data: {
+    name: "Avengers - Endgame"
+    url:"Test"
+    display: {
+        create: {
+            medium: "https://img01.mgo-images.com/image/thumbnail/v2/content/MMVAF76018A477C2826A4EC8747C40B7BE27.jpeg"
+            trailer: "http://fr.vid.web.acsta.net/nmedia/33/19/04/02/14//19583315_hd_013.mp4"
+        }
+    }
+}) { id }
+
+movie4: createVideo(data: {
+    name: "Seul sur mars"
+    url:"Test"
+    display: {
+        create: {
+            medium: "http://fr.web.img3.acsta.net/pictures/15/09/08/15/20/305329.jpg"
+            trailer: "http://fr.vid.web.acsta.net/nmedia/33/15/06/08/15/19554255_hd_013.mp4"
+        }
+    }
+}) { id }
+
+movie5: createVideo(data: {
+    name: "Je suis une légende"
+    url:"Test"
+    display: {
+        create: {
+            medium: "https://static.films-horreur.com/2015/06/pVc73MJKaXuI7nJ55Z5fMTEKid1.jpg"
+            trailer: "http://fr.vid.web.acsta.net/nmedia/33/13/08/12/16/18774671_sd_013.mp4"
+        }
+    }
+}) { id }
 }

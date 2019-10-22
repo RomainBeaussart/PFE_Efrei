@@ -1,0 +1,7 @@
+query UsernameVerif($username: String) {
+    usersConnection(where: { username: $username }) {
+        aggregate {
+            count
+        }
+    }
+}

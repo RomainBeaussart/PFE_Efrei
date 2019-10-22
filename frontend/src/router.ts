@@ -1,14 +1,16 @@
-import Vue from 'vue';
-import Router, { Route } from 'vue-router';
+import Vue from 'vue'
+import Router, { Route } from 'vue-router'
 import gql from 'graphql-tag';
-import { createProvider } from './vue-apollo';
+import { createProvider } from './vue-apollo'
 
-import store from './store/store';
+import store from './store/store'
 
-import Index from './views/Index.vue';
+import Index from './views/Index.vue'
 
-import Home from './views/Home.vue';
-import Login from './views/Login.vue';
+import Home from './views/Home.vue'
+import Login from './views/Login.vue'
+import Signup from './views/Signup.vue'
+import Serie from './views/Serie.vue'
 
 import USER_DETAILS from './graphql/auth/UserDetails.gql'
 
@@ -22,8 +24,10 @@ const router = new Router({
             path: '/',
             component: Index,
             children: [
-                { path: '/login', name: 'login', component: Login },
                 { path: '/', name: 'home', component: Home },
+                { path: '/login', name: 'login', component: Login },
+                { path: '/signup', name: 'signup', component: Signup },
+                { path: '/series/:id', name: 'series', component: Serie }
             ]
         },
     ]
@@ -31,6 +35,9 @@ const router = new Router({
 
 router.beforeEach(async (to: Route, from: Route, next: any) => {
     if (to.fullPath.startsWith('/login')) {
+        return next()
+    }
+    if (to.fullPath.startsWith('/signup')) {
         return next()
     }
 

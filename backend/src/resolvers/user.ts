@@ -33,6 +33,16 @@ export default {
                 token: jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: 60 * 120 }),
                 user
             }
+        },
+
+        signup: async (parent, args, context, info) => {
+            const user = await context.prisma.createUser({
+                username: args.data.username,
+                password: args.data.password,
+                firstname: args.data.firstname,
+                lastname: args.data.lastname
+            })
+            return user.id
         }
     }
 }

@@ -10,6 +10,7 @@ type Query {
 
 type Mutation {
     login(data: LoginInput!): UserAuthPayload
+    signup(data: SignupInput!): SignupPayload
 }
 
 input LoginInput {
@@ -20,4 +21,15 @@ input LoginInput {
 type UserAuthPayload {
     token: String!
     user: User!
+}
+
+input SignupInput {
+    username: String!
+    password: String!
+    firstname: String
+    lastname: String
+}
+
+type SignupPayload {
+    id: ID
 }
