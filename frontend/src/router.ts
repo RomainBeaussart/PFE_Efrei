@@ -10,7 +10,6 @@ import Index from './views/Index.vue'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
-import Serie from './views/Serie.vue'
 
 import USER_DETAILS from './graphql/auth/UserDetails.gql'
 
@@ -26,8 +25,7 @@ const router = new Router({
             children: [
                 { path: '/', name: 'home', component: Home },
                 { path: '/login', name: 'login', component: Login },
-                { path: '/signup', name: 'signup', component: Signup },
-                { path: '/series/:id', name: 'series', component: Serie }
+                { path: '/signup', name: 'signup', component: Signup }
             ]
         },
     ]
