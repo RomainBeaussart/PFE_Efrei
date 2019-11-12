@@ -21,8 +21,10 @@ import { Prisma } from '../prisma/generated/prisma-client'
 
 const forwardedRequests = [
     //! Queries
-    "Query.usersConnection",
-    "Query.videos", "Query.videos",
+    "Query.usersConnection", "Query.user",
+    "Query.video", "Query.videos",
+    "Query.display", "Query.displays",
+    "Query.series", "Query.serie",
 
     //! Mutations
     "Mutation.createUser", "Mutation.updateUser", "Mutation.deleteUser"

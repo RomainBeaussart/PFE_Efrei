@@ -1,0 +1,21 @@
+query Serie($id: ID!){
+  serie(where: {id: $id}) {
+    id
+    name
+    color
+    display{
+      big
+    }
+    seasons {
+      id
+      name
+      episodes {
+        id
+        name
+        display {
+          medium
+        }
+      }
+    }
+  }
+}
