@@ -1,5 +1,11 @@
-query UsernameVerif($username: String) {
-    usersConnection(where: { username: $username }) {
+query UsernameVerif($username: String $email: String) {
+    username: usersConnection(where: { username: $username }) {
+        aggregate {
+            count
+        }
+    }
+
+    email: usersConnection(where: { email: $email }) {
         aggregate {
             count
         }

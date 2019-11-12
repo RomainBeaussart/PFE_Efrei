@@ -83,6 +83,14 @@
                                     outlined
                                 ></v-text-field>
                             </v-flex>
+                            <v-flex xs8>
+                                <v-text-field
+                                    v-model="email"
+                                    :rules="[rules.email]"
+                                    label="Email"
+                                    outlined
+                                ></v-text-field>
+                            </v-flex>
                         </v-layout>
                     </v-card>
 
@@ -102,16 +110,29 @@
                 <v-stepper-content step="3">
                     <v-card
                         class="mb-12"
-                        height="200px"
+                        height="300px"
                         elevation="0"
                     >
-                        <v-btn
+                        <v-layout wrap xs12>
+                            <v-flex
+                                v-for="(title, id) in titles"
+                                v-bind:key="id"
+                                pa-3
+                                xs2
+                                :style="preferences.includes(title.id) ? 'background: #3498db; border-radius: 5px' : ''"
+                                @click="select(title.id)"
+                            >
+                                <img :src="title.small" width="100%" />
+
+                            </v-flex>
+                        </v-layout>
+                    </v-card>
+                    <v-btn
                             elevation="0"
                             @click="signup()"
                         >
                             Sign Up
                         </v-btn>
-                    </v-card>
                     <v-btn
                         elevation="0"
                         text
@@ -132,6 +153,8 @@ import { sha256 } from 'js-sha256'
 import USERNAME_VERIF from '../graphql/UsernameVerif.gql'
 import CREATE_USER from '../graphql/CreateUser.gql'
 
+import TITLES from '../graphql/SignupTitles.gql'
+
 
 @Component
 export default class Signup extends Vue {
@@ -146,14 +169,36 @@ export default class Signup extends Vue {
     rePasswordShow: boolean = false
 
     firstname: string = ""
-    lastname: string =""
+    lastname: string = ""
+    email: string = ""
+
+    preferences: Array<string> = []
+
+    titles: Array<any> = [
+        {
+            name: "One Piece",
+            small: "https://image.uniqlo.com//UQ/ST3/us/imagesother/home/190619-l3-square-onepiecestampede.jpg",
+            id: "one-piece",
+        }, {
+            name: "Naruto",
+            small: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvDo20IqrHrcSsfLzxhgb0fi-kC8Mpoqu_gIAUWKHmX5Z9200Drw&s",
+            id: "naruto"
+        }, {
+            name: "Stranger",
+            small:"https://akns-images.eonline.com/eol_images/Entire_Site/2017913/rs_600x600-171013065637-600.netflix-stranger-things-24252.ch.101317.jpg",
+            id: "stranger-things"
+        }
+    ]
+
+
 
 
     get rules() {
         return {
             username: !this.usernameIsset || this.username + " est déjà utilisé",
             password: (this.password.length >= 4 || this.password.length === 0) || "Min 4 characters",
-            rePassword: (this.rePassword === this.password || this.rePassword.length === 0) || "Les mots de passes ne correspondents pas"
+            rePassword: (this.rePassword === this.password || this.rePassword.length === 0) || "Les mots de passes ne correspondents pas",
+            email: !this.emailIsset || this.email + " est déjà utilisé"
         }
     }
 
@@ -172,20 +217,26 @@ export default class Signup extends Vue {
         variables() {
             return {
                 username: this.username,
-                firstname: this.firstname,
+                email: this.email,
             }
         },
         result({ data, loading, networkStatus }: any) {
             if (!loading) {
-                if (data && data.usersConnection && data.usersConnection.aggregate.count === 0) {
+                if (data && data.username && data.username.aggregate.count === 0) {
                     this.usernameIsset = false
                 } else {
                     this.usernameIsset = true
+                }
+                if (data && data.email && data.email.aggregate.count === 0) {
+                    this.emailIsset = false
+                } else {
+                    this.emailIsset = true
                 }
             }
         }
     })
     usernameIsset: boolean = false
+    emailIsset: boolean = false
 
     async signup() {
         console.log(this.username)
@@ -195,10 +246,31 @@ export default class Signup extends Vue {
                 username: this.username,
                 password: sha256(this.password),
                 firstname: this.firstname,
-                lastname: this.lastname
+                lastname: this.lastname,
+                email: this.email,
+                preferences: this.preferences.map(x => { return {id: x }})
             }
         })
         this.$router.push({name: "login"})
+    }
+
+    async mounted() {
+        let result = await this.$apollo.query({
+            query: TITLES
+        })
+
+        // this.titles = result.data.displays
+    }
+
+    select(id: string){
+        const index = this.preferences.indexOf(id)
+        console.log(index)
+        if(index === -1) {
+            this.preferences.push(id)
+        } else {
+            this.preferences.splice(index, 1)
+        }
+        console.log(this.preferences)
     }
 }
 </script>

@@ -1,0 +1,7 @@
+query SignupTitles {
+    displays( where: { likeable: LIKEABLE }){
+        id
+        name
+        small
+    }
+}

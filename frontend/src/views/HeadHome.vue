@@ -27,9 +27,27 @@
             <v-flex xs3 mx-3>
                 
                 <v-card
-                class="display middle"
-                transition="scroll-x-transition"
-                :style='`background: url("` + videos[currentVideo[2]].display.medium + `") 0% 0% / cover`'>
+                    
+                    class="display middle"
+                    transition="scroll-x-transition"
+                    :style='`background: url("` + videos[currentVideo[2]].display.medium + `") 0% 0% / cover`'
+                >
+                    <v-layout wrap pa-3 absolute>
+                        <v-flex xs6 pa-3>
+                            <v-btn
+                                style="width: 100%"
+                                color="primary"
+                            >Animé</v-btn>
+                        </v-flex>
+                        <v-flex xs6 pa-3>
+                            <v-btn
+                                style="width: 100%"
+                                ma-5
+                                color="primary"
+                            >Manga</v-btn>
+                        </v-flex>
+                    </v-layout>
+                    
                 </v-card>
                 
             </v-flex>

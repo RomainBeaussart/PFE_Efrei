@@ -66,7 +66,7 @@ export default class Login extends Vue {
                     password: sha256(this.password)
                 }
             })
-
+            
             this.loading = false
 
             if (result.data.login) {
