@@ -1,3 +1,10 @@
 query Videos {
-    videos id name display {medium trailer} }
+    videos {
+        id
+        name
+        display {
+            medium
+            trailer
+        }
+    }
 }

@@ -10,6 +10,8 @@ import store from './store/store';
 
 import { createProvider } from './vue-apollo'
 import VideoBg from './components/VideoBackground.vue'
+import VueSelectImage from 'vue-select-image'
+import { Hooper, Slide } from 'hooper';
 
 //
 // end register
@@ -20,8 +22,13 @@ Vue.config.productionTip = false;
 // }
 
 Vue.use(VueApollo)
+Vue.use(VueSelectImage)
 Vue.component('file-upload', VueUploadComponent)
 Vue.component('video-bg', VideoBg)
+Vue.component('hooper', Hooper)
+Vue.component('slide', Slide)
+
+require('vue-select-image/dist/vue-select-image.css')
 
 new Vue({
     router,

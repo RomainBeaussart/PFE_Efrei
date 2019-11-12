@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   display: (where?: DisplayWhereInput) => Promise<boolean>;
+  progress: (where?: ProgressWhereInput) => Promise<boolean>;
   season: (where?: SeasonWhereInput) => Promise<boolean>;
   serie: (where?: SerieWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -61,6 +62,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => DisplayConnectionPromise;
+  progress: (where: ProgressWhereUniqueInput) => ProgressNullablePromise;
+  progresses: (args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Progress>;
+  progressesConnection: (args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ProgressConnectionPromise;
   season: (where: SeasonWhereUniqueInput) => SeasonNullablePromise;
   seasons: (args?: {
     where?: SeasonWhereInput;
@@ -159,6 +179,22 @@ export interface Prisma {
   }) => DisplayPromise;
   deleteDisplay: (where: DisplayWhereUniqueInput) => DisplayPromise;
   deleteManyDisplays: (where?: DisplayWhereInput) => BatchPayloadPromise;
+  createProgress: (data: ProgressCreateInput) => ProgressPromise;
+  updateProgress: (args: {
+    data: ProgressUpdateInput;
+    where: ProgressWhereUniqueInput;
+  }) => ProgressPromise;
+  updateManyProgresses: (args: {
+    data: ProgressUpdateManyMutationInput;
+    where?: ProgressWhereInput;
+  }) => BatchPayloadPromise;
+  upsertProgress: (args: {
+    where: ProgressWhereUniqueInput;
+    create: ProgressCreateInput;
+    update: ProgressUpdateInput;
+  }) => ProgressPromise;
+  deleteProgress: (where: ProgressWhereUniqueInput) => ProgressPromise;
+  deleteManyProgresses: (where?: ProgressWhereInput) => BatchPayloadPromise;
   createSeason: (data: SeasonCreateInput) => SeasonPromise;
   updateSeason: (args: {
     data: SeasonUpdateInput;
@@ -235,6 +271,9 @@ export interface Subscription {
   display: (
     where?: DisplaySubscriptionWhereInput
   ) => DisplaySubscriptionPayloadSubscription;
+  progress: (
+    where?: ProgressSubscriptionWhereInput
+  ) => ProgressSubscriptionPayloadSubscription;
   season: (
     where?: SeasonSubscriptionWhereInput
   ) => SeasonSubscriptionPayloadSubscription;
@@ -257,6 +296,16 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type SerieOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "color_ASC"
+  | "color_DESC";
+
+export type Sexe = "MALE" | "FEMALE" | "OTHER";
+
 export type VideoOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -264,6 +313,12 @@ export type VideoOrderByInput =
   | "name_DESC"
   | "url_ASC"
   | "url_DESC";
+
+export type ProgressOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "avancement_ASC"
+  | "avancement_DESC";
 
 export type SeasonOrderByInput =
   | "id_ASC"
@@ -274,6 +329,10 @@ export type SeasonOrderByInput =
 export type DisplayOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "type_ASC"
+  | "type_DESC"
   | "trailer_ASC"
   | "trailer_DESC"
   | "big_ASC"
@@ -281,9 +340,15 @@ export type DisplayOrderByInput =
   | "medium_ASC"
   | "medium_DESC"
   | "small_ASC"
-  | "small_DESC";
+  | "small_DESC"
+  | "likeable_ASC"
+  | "likeable_DESC";
 
-export type SerieOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type Likeable = "LIKEABLE" | "NOT_LIKEABLE";
+
+export type MediaType = "SERIE" | "MOVIE" | "MANGA" | "ANIME";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -294,94 +359,73 @@ export type UserOrderByInput =
   | "updatedAt_DESC"
   | "username_ASC"
   | "username_DESC"
+  | "email_ASC"
+  | "email_DESC"
   | "password_ASC"
   | "password_DESC"
   | "firstname_ASC"
   | "firstname_DESC"
   | "lastname_ASC"
-  | "lastname_DESC";
+  | "lastname_DESC"
+  | "birthday_ASC"
+  | "birthday_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "sexe_ASC"
+  | "sexe_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export interface SeasonUpdateInput {
-  name?: Maybe<String>;
-  episodes?: Maybe<VideoUpdateManyWithoutSeasonInput>;
+export interface SeasonUpsertWithoutEpisodesInput {
+  update: SeasonUpdateWithoutEpisodesDataInput;
+  create: SeasonCreateWithoutEpisodesInput;
 }
 
 export type DisplayWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type VideoWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface SeasonCreateManyInput {
-  create?: Maybe<SeasonCreateInput[] | SeasonCreateInput>;
-  connect?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
-}
-
-export interface SeasonScalarWhereInput {
+export interface VideoCreateWithoutProgressInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
-  OR?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
-  NOT?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
+  name: String;
+  url: String;
+  display: DisplayCreateOneInput;
+  season?: Maybe<SeasonCreateOneWithoutEpisodesInput>;
 }
 
-export interface DisplayUpdateOneRequiredInput {
+export interface VideoUpdateManyDataInput {
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface DisplayCreateOneInput {
   create?: Maybe<DisplayCreateInput>;
-  update?: Maybe<DisplayUpdateDataInput>;
-  upsert?: Maybe<DisplayUpsertNestedInput>;
   connect?: Maybe<DisplayWhereUniqueInput>;
 }
 
-export interface SeasonUpsertWithWhereUniqueNestedInput {
-  where: SeasonWhereUniqueInput;
-  update: SeasonUpdateDataInput;
-  create: SeasonCreateInput;
+export interface DisplayUpsertWithWhereUniqueNestedInput {
+  where: DisplayWhereUniqueInput;
+  update: DisplayUpdateDataInput;
+  create: DisplayCreateInput;
 }
 
-export interface UserSubscriptionWhereInput {
+export interface SeasonCreateOneWithoutEpisodesInput {
+  create?: Maybe<SeasonCreateWithoutEpisodesInput>;
+  connect?: Maybe<SeasonWhereUniqueInput>;
+}
+
+export interface VideoSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  node?: Maybe<VideoWhereInput>;
+  AND?: Maybe<VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput>;
+  OR?: Maybe<VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput>;
+  NOT?: Maybe<VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput>;
 }
 
-export interface SeasonUpdateDataInput {
+export interface SeasonCreateWithoutEpisodesInput {
+  id?: Maybe<ID_Input>;
   name?: Maybe<String>;
-  episodes?: Maybe<VideoUpdateManyWithoutSeasonInput>;
 }
 
 export interface SerieSubscriptionWhereInput {
@@ -395,7 +439,12 @@ export interface SerieSubscriptionWhereInput {
   NOT?: Maybe<SerieSubscriptionWhereInput[] | SerieSubscriptionWhereInput>;
 }
 
-export interface SeasonWhereInput {
+export interface UserCreateOneWithoutProgressesInput {
+  create?: Maybe<UserCreateWithoutProgressesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface VideoWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -424,43 +473,186 @@ export interface SeasonWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  episodes_every?: Maybe<VideoWhereInput>;
-  episodes_some?: Maybe<VideoWhereInput>;
-  episodes_none?: Maybe<VideoWhereInput>;
-  AND?: Maybe<SeasonWhereInput[] | SeasonWhereInput>;
-  OR?: Maybe<SeasonWhereInput[] | SeasonWhereInput>;
-  NOT?: Maybe<SeasonWhereInput[] | SeasonWhereInput>;
+  url?: Maybe<String>;
+  url_not?: Maybe<String>;
+  url_in?: Maybe<String[] | String>;
+  url_not_in?: Maybe<String[] | String>;
+  url_lt?: Maybe<String>;
+  url_lte?: Maybe<String>;
+  url_gt?: Maybe<String>;
+  url_gte?: Maybe<String>;
+  url_contains?: Maybe<String>;
+  url_not_contains?: Maybe<String>;
+  url_starts_with?: Maybe<String>;
+  url_not_starts_with?: Maybe<String>;
+  url_ends_with?: Maybe<String>;
+  url_not_ends_with?: Maybe<String>;
+  display?: Maybe<DisplayWhereInput>;
+  season?: Maybe<SeasonWhereInput>;
+  progress_every?: Maybe<ProgressWhereInput>;
+  progress_some?: Maybe<ProgressWhereInput>;
+  progress_none?: Maybe<ProgressWhereInput>;
+  AND?: Maybe<VideoWhereInput[] | VideoWhereInput>;
+  OR?: Maybe<VideoWhereInput[] | VideoWhereInput>;
+  NOT?: Maybe<VideoWhereInput[] | VideoWhereInput>;
 }
 
-export interface DisplaySubscriptionWhereInput {
+export interface UserCreateWithoutProgressesInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  birthday?: Maybe<DateTimeInput>;
+  preferences?: Maybe<DisplayCreateManyInput>;
+  description?: Maybe<String>;
+  sexe?: Maybe<Sexe>;
+}
+
+export interface ProgressWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  avancement?: Maybe<Float>;
+  avancement_not?: Maybe<Float>;
+  avancement_in?: Maybe<Float[] | Float>;
+  avancement_not_in?: Maybe<Float[] | Float>;
+  avancement_lt?: Maybe<Float>;
+  avancement_lte?: Maybe<Float>;
+  avancement_gt?: Maybe<Float>;
+  avancement_gte?: Maybe<Float>;
+  video?: Maybe<VideoWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<ProgressWhereInput[] | ProgressWhereInput>;
+  OR?: Maybe<ProgressWhereInput[] | ProgressWhereInput>;
+  NOT?: Maybe<ProgressWhereInput[] | ProgressWhereInput>;
+}
+
+export interface DisplayCreateManyInput {
+  create?: Maybe<DisplayCreateInput[] | DisplayCreateInput>;
+  connect?: Maybe<DisplayWhereUniqueInput[] | DisplayWhereUniqueInput>;
+}
+
+export interface ProgressSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<DisplayWhereInput>;
-  AND?: Maybe<DisplaySubscriptionWhereInput[] | DisplaySubscriptionWhereInput>;
-  OR?: Maybe<DisplaySubscriptionWhereInput[] | DisplaySubscriptionWhereInput>;
-  NOT?: Maybe<DisplaySubscriptionWhereInput[] | DisplaySubscriptionWhereInput>;
+  node?: Maybe<ProgressWhereInput>;
+  AND?: Maybe<
+    ProgressSubscriptionWhereInput[] | ProgressSubscriptionWhereInput
+  >;
+  OR?: Maybe<ProgressSubscriptionWhereInput[] | ProgressSubscriptionWhereInput>;
+  NOT?: Maybe<
+    ProgressSubscriptionWhereInput[] | ProgressSubscriptionWhereInput
+  >;
 }
 
-export interface DisplayCreateInput {
+export interface ProgressUpdateInput {
+  avancement?: Maybe<Float>;
+  video?: Maybe<VideoUpdateOneRequiredWithoutProgressInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutProgressesInput>;
+}
+
+export interface VideoUpdateManyMutationInput {
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+}
+
+export interface VideoUpdateOneRequiredWithoutProgressInput {
+  create?: Maybe<VideoCreateWithoutProgressInput>;
+  update?: Maybe<VideoUpdateWithoutProgressDataInput>;
+  upsert?: Maybe<VideoUpsertWithoutProgressInput>;
+  connect?: Maybe<VideoWhereUniqueInput>;
+}
+
+export interface VideoCreateInput {
   id?: Maybe<ID_Input>;
+  name: String;
+  url: String;
+  display: DisplayCreateOneInput;
+  season?: Maybe<SeasonCreateOneWithoutEpisodesInput>;
+  progress?: Maybe<ProgressCreateManyWithoutVideoInput>;
+}
+
+export interface VideoUpdateWithoutProgressDataInput {
+  name?: Maybe<String>;
+  url?: Maybe<String>;
+  display?: Maybe<DisplayUpdateOneRequiredInput>;
+  season?: Maybe<SeasonUpdateOneWithoutEpisodesInput>;
+}
+
+export interface ProgressUpsertWithWhereUniqueWithoutUserInput {
+  where: ProgressWhereUniqueInput;
+  update: ProgressUpdateWithoutUserDataInput;
+  create: ProgressCreateWithoutUserInput;
+}
+
+export interface DisplayUpdateOneRequiredInput {
+  create?: Maybe<DisplayCreateInput>;
+  update?: Maybe<DisplayUpdateDataInput>;
+  upsert?: Maybe<DisplayUpsertNestedInput>;
+  connect?: Maybe<DisplayWhereUniqueInput>;
+}
+
+export type SeasonWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface DisplayUpdateDataInput {
+  name?: Maybe<String>;
+  type?: Maybe<MediaType>;
   trailer?: Maybe<String>;
   big?: Maybe<String>;
   medium?: Maybe<String>;
   small?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
 }
 
-export interface SeasonUpsertWithoutEpisodesInput {
-  update: SeasonUpdateWithoutEpisodesDataInput;
-  create: SeasonCreateWithoutEpisodesInput;
+export interface ProgressUpdateManyWithoutUserInput {
+  create?: Maybe<
+    ProgressCreateWithoutUserInput[] | ProgressCreateWithoutUserInput
+  >;
+  delete?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  connect?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  set?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  disconnect?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  update?: Maybe<
+    | ProgressUpdateWithWhereUniqueWithoutUserInput[]
+    | ProgressUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ProgressUpsertWithWhereUniqueWithoutUserInput[]
+    | ProgressUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ProgressScalarWhereInput[] | ProgressScalarWhereInput>;
+  updateMany?: Maybe<
+    | ProgressUpdateManyWithWhereNestedInput[]
+    | ProgressUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface DisplayUpdateInput {
-  trailer?: Maybe<String>;
-  big?: Maybe<String>;
-  medium?: Maybe<String>;
-  small?: Maybe<String>;
+export interface DisplayUpsertNestedInput {
+  update: DisplayUpdateDataInput;
+  create: DisplayCreateInput;
+}
+
+export interface ProgressCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  avancement: Float;
+  video: VideoCreateOneWithoutProgressInput;
 }
 
 export interface SeasonUpdateOneWithoutEpisodesInput {
@@ -472,23 +664,15 @@ export interface SeasonUpdateOneWithoutEpisodesInput {
   connect?: Maybe<SeasonWhereUniqueInput>;
 }
 
-export interface DisplayUpdateManyMutationInput {
-  trailer?: Maybe<String>;
-  big?: Maybe<String>;
-  medium?: Maybe<String>;
-  small?: Maybe<String>;
+export interface ProgressCreateManyWithoutUserInput {
+  create?: Maybe<
+    ProgressCreateWithoutUserInput[] | ProgressCreateWithoutUserInput
+  >;
+  connect?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
 }
 
-export interface VideoUpdateInput {
+export interface SeasonUpdateWithoutEpisodesDataInput {
   name?: Maybe<String>;
-  url?: Maybe<String>;
-  display?: Maybe<DisplayUpdateOneRequiredInput>;
-  season?: Maybe<SeasonUpdateOneWithoutEpisodesInput>;
-}
-
-export interface SeasonUpdateWithWhereUniqueNestedInput {
-  where: SeasonWhereUniqueInput;
-  data: SeasonUpdateDataInput;
 }
 
 export interface DisplayWhereInput {
@@ -506,6 +690,24 @@ export interface DisplayWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  type?: Maybe<MediaType>;
+  type_not?: Maybe<MediaType>;
+  type_in?: Maybe<MediaType[] | MediaType>;
+  type_not_in?: Maybe<MediaType[] | MediaType>;
   trailer?: Maybe<String>;
   trailer_not?: Maybe<String>;
   trailer_in?: Maybe<String[] | String>;
@@ -562,129 +764,47 @@ export interface DisplayWhereInput {
   small_not_starts_with?: Maybe<String>;
   small_ends_with?: Maybe<String>;
   small_not_ends_with?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
+  likeable_not?: Maybe<Likeable>;
+  likeable_in?: Maybe<Likeable[] | Likeable>;
+  likeable_not_in?: Maybe<Likeable[] | Likeable>;
   AND?: Maybe<DisplayWhereInput[] | DisplayWhereInput>;
   OR?: Maybe<DisplayWhereInput[] | DisplayWhereInput>;
   NOT?: Maybe<DisplayWhereInput[] | DisplayWhereInput>;
 }
 
-export interface SeasonUpdateManyInput {
-  create?: Maybe<SeasonCreateInput[] | SeasonCreateInput>;
-  update?: Maybe<
-    | SeasonUpdateWithWhereUniqueNestedInput[]
-    | SeasonUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | SeasonUpsertWithWhereUniqueNestedInput[]
-    | SeasonUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
-  connect?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
-  set?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
-  disconnect?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
-  deleteMany?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
-  updateMany?: Maybe<
-    | SeasonUpdateManyWithWhereNestedInput[]
-    | SeasonUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface SeasonCreateOneWithoutEpisodesInput {
-  create?: Maybe<SeasonCreateWithoutEpisodesInput>;
-  connect?: Maybe<SeasonWhereUniqueInput>;
-}
-
-export interface SeasonCreateInput {
+export interface SerieCreateInput {
   id?: Maybe<ID_Input>;
+  name: String;
+  display?: Maybe<DisplayCreateOneInput>;
+  seasons?: Maybe<SeasonCreateManyInput>;
+  color?: Maybe<String>;
+}
+
+export interface SerieUpdateManyMutationInput {
   name?: Maybe<String>;
-  episodes?: Maybe<VideoCreateManyWithoutSeasonInput>;
+  color?: Maybe<String>;
+}
+
+export interface VideoUpsertWithoutProgressInput {
+  update: VideoUpdateWithoutProgressDataInput;
+  create: VideoCreateWithoutProgressInput;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   username?: Maybe<String>;
+  email?: Maybe<String>;
 }>;
 
-export interface VideoCreateManyWithoutSeasonInput {
-  create?: Maybe<
-    VideoCreateWithoutSeasonInput[] | VideoCreateWithoutSeasonInput
-  >;
-  connect?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
+export interface UserUpdateOneRequiredWithoutProgressesInput {
+  create?: Maybe<UserCreateWithoutProgressesInput>;
+  update?: Maybe<UserUpdateWithoutProgressesDataInput>;
+  upsert?: Maybe<UserUpsertWithoutProgressesInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-}
-
-export interface VideoCreateWithoutSeasonInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  url: String;
-  display: DisplayCreateOneInput;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
-}
-
-export interface DisplayCreateOneInput {
-  create?: Maybe<DisplayCreateInput>;
-  connect?: Maybe<DisplayWhereUniqueInput>;
-}
-
-export interface SeasonUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface DisplayUpdateOneInput {
-  create?: Maybe<DisplayCreateInput>;
-  update?: Maybe<DisplayUpdateDataInput>;
-  upsert?: Maybe<DisplayUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<DisplayWhereUniqueInput>;
-}
-
-export interface VideoSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<VideoWhereInput>;
-  AND?: Maybe<VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput>;
-  OR?: Maybe<VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput>;
-  NOT?: Maybe<VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput>;
-}
-
-export interface VideoUpdateManyWithoutSeasonInput {
-  create?: Maybe<
-    VideoCreateWithoutSeasonInput[] | VideoCreateWithoutSeasonInput
-  >;
-  delete?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
-  connect?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
-  set?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
-  disconnect?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
-  update?: Maybe<
-    | VideoUpdateWithWhereUniqueWithoutSeasonInput[]
-    | VideoUpdateWithWhereUniqueWithoutSeasonInput
-  >;
-  upsert?: Maybe<
-    | VideoUpsertWithWhereUniqueWithoutSeasonInput[]
-    | VideoUpsertWithWhereUniqueWithoutSeasonInput
-  >;
-  deleteMany?: Maybe<VideoScalarWhereInput[] | VideoScalarWhereInput>;
-  updateMany?: Maybe<
-    VideoUpdateManyWithWhereNestedInput[] | VideoUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface VideoWhereInput {
+export interface SeasonScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -713,90 +833,709 @@ export interface VideoWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  display?: Maybe<DisplayWhereInput>;
-  season?: Maybe<SeasonWhereInput>;
-  AND?: Maybe<VideoWhereInput[] | VideoWhereInput>;
-  OR?: Maybe<VideoWhereInput[] | VideoWhereInput>;
-  NOT?: Maybe<VideoWhereInput[] | VideoWhereInput>;
+  AND?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
+  OR?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
+  NOT?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
 }
 
-export interface VideoUpdateWithWhereUniqueWithoutSeasonInput {
-  where: VideoWhereUniqueInput;
-  data: VideoUpdateWithoutSeasonDataInput;
+export interface UserUpdateWithoutProgressesDataInput {
+  username?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  birthday?: Maybe<DateTimeInput>;
+  preferences?: Maybe<DisplayUpdateManyInput>;
+  description?: Maybe<String>;
+  sexe?: Maybe<Sexe>;
 }
 
-export interface VideoUpdateManyMutationInput {
+export interface SeasonUpdateDataInput {
   name?: Maybe<String>;
-  url?: Maybe<String>;
+  episodes?: Maybe<VideoUpdateManyWithoutSeasonInput>;
 }
 
-export interface VideoUpdateWithoutSeasonDataInput {
+export interface DisplayUpdateManyInput {
+  create?: Maybe<DisplayCreateInput[] | DisplayCreateInput>;
+  update?: Maybe<
+    | DisplayUpdateWithWhereUniqueNestedInput[]
+    | DisplayUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | DisplayUpsertWithWhereUniqueNestedInput[]
+    | DisplayUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<DisplayWhereUniqueInput[] | DisplayWhereUniqueInput>;
+  connect?: Maybe<DisplayWhereUniqueInput[] | DisplayWhereUniqueInput>;
+  set?: Maybe<DisplayWhereUniqueInput[] | DisplayWhereUniqueInput>;
+  disconnect?: Maybe<DisplayWhereUniqueInput[] | DisplayWhereUniqueInput>;
+  deleteMany?: Maybe<DisplayScalarWhereInput[] | DisplayScalarWhereInput>;
+  updateMany?: Maybe<
+    | DisplayUpdateManyWithWhereNestedInput[]
+    | DisplayUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SeasonUpdateWithWhereUniqueNestedInput {
+  where: SeasonWhereUniqueInput;
+  data: SeasonUpdateDataInput;
+}
+
+export interface DisplayUpdateWithWhereUniqueNestedInput {
+  where: DisplayWhereUniqueInput;
+  data: DisplayUpdateDataInput;
+}
+
+export interface DisplayUpdateOneInput {
+  create?: Maybe<DisplayCreateInput>;
+  update?: Maybe<DisplayUpdateDataInput>;
+  upsert?: Maybe<DisplayUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<DisplayWhereUniqueInput>;
+}
+
+export interface SeasonUpdateManyMutationInput {
   name?: Maybe<String>;
-  url?: Maybe<String>;
-  display?: Maybe<DisplayUpdateOneRequiredInput>;
+}
+
+export interface DisplayCreateInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  type?: Maybe<MediaType>;
+  trailer?: Maybe<String>;
+  big?: Maybe<String>;
+  medium?: Maybe<String>;
+  small?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
+}
+
+export interface DisplayScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  type?: Maybe<MediaType>;
+  type_not?: Maybe<MediaType>;
+  type_in?: Maybe<MediaType[] | MediaType>;
+  type_not_in?: Maybe<MediaType[] | MediaType>;
+  trailer?: Maybe<String>;
+  trailer_not?: Maybe<String>;
+  trailer_in?: Maybe<String[] | String>;
+  trailer_not_in?: Maybe<String[] | String>;
+  trailer_lt?: Maybe<String>;
+  trailer_lte?: Maybe<String>;
+  trailer_gt?: Maybe<String>;
+  trailer_gte?: Maybe<String>;
+  trailer_contains?: Maybe<String>;
+  trailer_not_contains?: Maybe<String>;
+  trailer_starts_with?: Maybe<String>;
+  trailer_not_starts_with?: Maybe<String>;
+  trailer_ends_with?: Maybe<String>;
+  trailer_not_ends_with?: Maybe<String>;
+  big?: Maybe<String>;
+  big_not?: Maybe<String>;
+  big_in?: Maybe<String[] | String>;
+  big_not_in?: Maybe<String[] | String>;
+  big_lt?: Maybe<String>;
+  big_lte?: Maybe<String>;
+  big_gt?: Maybe<String>;
+  big_gte?: Maybe<String>;
+  big_contains?: Maybe<String>;
+  big_not_contains?: Maybe<String>;
+  big_starts_with?: Maybe<String>;
+  big_not_starts_with?: Maybe<String>;
+  big_ends_with?: Maybe<String>;
+  big_not_ends_with?: Maybe<String>;
+  medium?: Maybe<String>;
+  medium_not?: Maybe<String>;
+  medium_in?: Maybe<String[] | String>;
+  medium_not_in?: Maybe<String[] | String>;
+  medium_lt?: Maybe<String>;
+  medium_lte?: Maybe<String>;
+  medium_gt?: Maybe<String>;
+  medium_gte?: Maybe<String>;
+  medium_contains?: Maybe<String>;
+  medium_not_contains?: Maybe<String>;
+  medium_starts_with?: Maybe<String>;
+  medium_not_starts_with?: Maybe<String>;
+  medium_ends_with?: Maybe<String>;
+  medium_not_ends_with?: Maybe<String>;
+  small?: Maybe<String>;
+  small_not?: Maybe<String>;
+  small_in?: Maybe<String[] | String>;
+  small_not_in?: Maybe<String[] | String>;
+  small_lt?: Maybe<String>;
+  small_lte?: Maybe<String>;
+  small_gt?: Maybe<String>;
+  small_gte?: Maybe<String>;
+  small_contains?: Maybe<String>;
+  small_not_contains?: Maybe<String>;
+  small_starts_with?: Maybe<String>;
+  small_not_starts_with?: Maybe<String>;
+  small_ends_with?: Maybe<String>;
+  small_not_ends_with?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
+  likeable_not?: Maybe<Likeable>;
+  likeable_in?: Maybe<Likeable[] | Likeable>;
+  likeable_not_in?: Maybe<Likeable[] | Likeable>;
+  AND?: Maybe<DisplayScalarWhereInput[] | DisplayScalarWhereInput>;
+  OR?: Maybe<DisplayScalarWhereInput[] | DisplayScalarWhereInput>;
+  NOT?: Maybe<DisplayScalarWhereInput[] | DisplayScalarWhereInput>;
+}
+
+export interface DisplayUpdateManyMutationInput {
+  name?: Maybe<String>;
+  type?: Maybe<MediaType>;
+  trailer?: Maybe<String>;
+  big?: Maybe<String>;
+  medium?: Maybe<String>;
+  small?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
+}
+
+export interface DisplayUpdateManyWithWhereNestedInput {
+  where: DisplayScalarWhereInput;
+  data: DisplayUpdateManyDataInput;
+}
+
+export interface SeasonCreateManyInput {
+  create?: Maybe<SeasonCreateInput[] | SeasonCreateInput>;
+  connect?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
+}
+
+export interface DisplayUpdateManyDataInput {
+  name?: Maybe<String>;
+  type?: Maybe<MediaType>;
+  trailer?: Maybe<String>;
+  big?: Maybe<String>;
+  medium?: Maybe<String>;
+  small?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
+}
+
+export interface VideoCreateOneWithoutProgressInput {
+  create?: Maybe<VideoCreateWithoutProgressInput>;
+  connect?: Maybe<VideoWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutProgressesInput {
+  update: UserUpdateWithoutProgressesDataInput;
+  create: UserCreateWithoutProgressesInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface ProgressUpdateManyMutationInput {
+  avancement?: Maybe<Float>;
+}
+
+export interface SeasonWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  episodes_every?: Maybe<VideoWhereInput>;
+  episodes_some?: Maybe<VideoWhereInput>;
+  episodes_none?: Maybe<VideoWhereInput>;
+  AND?: Maybe<SeasonWhereInput[] | SeasonWhereInput>;
+  OR?: Maybe<SeasonWhereInput[] | SeasonWhereInput>;
+  NOT?: Maybe<SeasonWhereInput[] | SeasonWhereInput>;
+}
+
+export interface SeasonCreateInput {
+  id?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  episodes?: Maybe<VideoCreateManyWithoutSeasonInput>;
+}
+
+export interface DisplaySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<DisplayWhereInput>;
+  AND?: Maybe<DisplaySubscriptionWhereInput[] | DisplaySubscriptionWhereInput>;
+  OR?: Maybe<DisplaySubscriptionWhereInput[] | DisplaySubscriptionWhereInput>;
+  NOT?: Maybe<DisplaySubscriptionWhereInput[] | DisplaySubscriptionWhereInput>;
+}
+
+export interface VideoCreateManyWithoutSeasonInput {
+  create?: Maybe<
+    VideoCreateWithoutSeasonInput[] | VideoCreateWithoutSeasonInput
+  >;
+  connect?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
+}
+
+export interface UserUpdateManyMutationInput {
+  username?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  birthday?: Maybe<DateTimeInput>;
+  description?: Maybe<String>;
+  sexe?: Maybe<Sexe>;
+}
+
+export interface VideoCreateWithoutSeasonInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  url: String;
+  display: DisplayCreateOneInput;
+  progress?: Maybe<ProgressCreateManyWithoutVideoInput>;
+}
+
+export interface ProgressUpdateWithWhereUniqueWithoutUserInput {
+  where: ProgressWhereUniqueInput;
+  data: ProgressUpdateWithoutUserDataInput;
+}
+
+export interface ProgressCreateManyWithoutVideoInput {
+  create?: Maybe<
+    ProgressCreateWithoutVideoInput[] | ProgressCreateWithoutVideoInput
+  >;
+  connect?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
 }
 
 export type SerieWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export interface ProgressCreateWithoutVideoInput {
+  id?: Maybe<ID_Input>;
+  avancement: Float;
+  user: UserCreateOneWithoutProgressesInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  username: String;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  firstname?: Maybe<String>;
+  lastname?: Maybe<String>;
+  birthday?: Maybe<DateTimeInput>;
+  preferences?: Maybe<DisplayCreateManyInput>;
+  description?: Maybe<String>;
+  sexe?: Maybe<Sexe>;
+  progresses?: Maybe<ProgressCreateManyWithoutUserInput>;
+}
+
+export interface SeasonUpdateInput {
+  name?: Maybe<String>;
+  episodes?: Maybe<VideoUpdateManyWithoutSeasonInput>;
+}
+
+export interface SeasonUpdateManyWithWhereNestedInput {
+  where: SeasonScalarWhereInput;
+  data: SeasonUpdateManyDataInput;
+}
+
+export interface VideoUpdateManyWithoutSeasonInput {
+  create?: Maybe<
+    VideoCreateWithoutSeasonInput[] | VideoCreateWithoutSeasonInput
+  >;
+  delete?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
+  connect?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
+  set?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
+  disconnect?: Maybe<VideoWhereUniqueInput[] | VideoWhereUniqueInput>;
+  update?: Maybe<
+    | VideoUpdateWithWhereUniqueWithoutSeasonInput[]
+    | VideoUpdateWithWhereUniqueWithoutSeasonInput
+  >;
+  upsert?: Maybe<
+    | VideoUpsertWithWhereUniqueWithoutSeasonInput[]
+    | VideoUpsertWithWhereUniqueWithoutSeasonInput
+  >;
+  deleteMany?: Maybe<VideoScalarWhereInput[] | VideoScalarWhereInput>;
+  updateMany?: Maybe<
+    VideoUpdateManyWithWhereNestedInput[] | VideoUpdateManyWithWhereNestedInput
+  >;
+}
+
+export type VideoWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface VideoUpdateWithWhereUniqueWithoutSeasonInput {
+  where: VideoWhereUniqueInput;
+  data: VideoUpdateWithoutSeasonDataInput;
+}
+
 export interface SerieUpdateInput {
   name?: Maybe<String>;
   display?: Maybe<DisplayUpdateOneInput>;
   seasons?: Maybe<SeasonUpdateManyInput>;
+  color?: Maybe<String>;
 }
 
-export interface SeasonCreateWithoutEpisodesInput {
-  id?: Maybe<ID_Input>;
+export interface VideoUpdateWithoutSeasonDataInput {
   name?: Maybe<String>;
+  url?: Maybe<String>;
+  display?: Maybe<DisplayUpdateOneRequiredInput>;
+  progress?: Maybe<ProgressUpdateManyWithoutVideoInput>;
 }
 
-export interface DisplayUpdateDataInput {
+export type ProgressWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProgressUpdateManyWithoutVideoInput {
+  create?: Maybe<
+    ProgressCreateWithoutVideoInput[] | ProgressCreateWithoutVideoInput
+  >;
+  delete?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  connect?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  set?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  disconnect?: Maybe<ProgressWhereUniqueInput[] | ProgressWhereUniqueInput>;
+  update?: Maybe<
+    | ProgressUpdateWithWhereUniqueWithoutVideoInput[]
+    | ProgressUpdateWithWhereUniqueWithoutVideoInput
+  >;
+  upsert?: Maybe<
+    | ProgressUpsertWithWhereUniqueWithoutVideoInput[]
+    | ProgressUpsertWithWhereUniqueWithoutVideoInput
+  >;
+  deleteMany?: Maybe<ProgressScalarWhereInput[] | ProgressScalarWhereInput>;
+  updateMany?: Maybe<
+    | ProgressUpdateManyWithWhereNestedInput[]
+    | ProgressUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  firstname?: Maybe<String>;
+  firstname_not?: Maybe<String>;
+  firstname_in?: Maybe<String[] | String>;
+  firstname_not_in?: Maybe<String[] | String>;
+  firstname_lt?: Maybe<String>;
+  firstname_lte?: Maybe<String>;
+  firstname_gt?: Maybe<String>;
+  firstname_gte?: Maybe<String>;
+  firstname_contains?: Maybe<String>;
+  firstname_not_contains?: Maybe<String>;
+  firstname_starts_with?: Maybe<String>;
+  firstname_not_starts_with?: Maybe<String>;
+  firstname_ends_with?: Maybe<String>;
+  firstname_not_ends_with?: Maybe<String>;
+  lastname?: Maybe<String>;
+  lastname_not?: Maybe<String>;
+  lastname_in?: Maybe<String[] | String>;
+  lastname_not_in?: Maybe<String[] | String>;
+  lastname_lt?: Maybe<String>;
+  lastname_lte?: Maybe<String>;
+  lastname_gt?: Maybe<String>;
+  lastname_gte?: Maybe<String>;
+  lastname_contains?: Maybe<String>;
+  lastname_not_contains?: Maybe<String>;
+  lastname_starts_with?: Maybe<String>;
+  lastname_not_starts_with?: Maybe<String>;
+  lastname_ends_with?: Maybe<String>;
+  lastname_not_ends_with?: Maybe<String>;
+  birthday?: Maybe<DateTimeInput>;
+  birthday_not?: Maybe<DateTimeInput>;
+  birthday_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  birthday_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  birthday_lt?: Maybe<DateTimeInput>;
+  birthday_lte?: Maybe<DateTimeInput>;
+  birthday_gt?: Maybe<DateTimeInput>;
+  birthday_gte?: Maybe<DateTimeInput>;
+  preferences_every?: Maybe<DisplayWhereInput>;
+  preferences_some?: Maybe<DisplayWhereInput>;
+  preferences_none?: Maybe<DisplayWhereInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  sexe?: Maybe<Sexe>;
+  sexe_not?: Maybe<Sexe>;
+  sexe_in?: Maybe<Sexe[] | Sexe>;
+  sexe_not_in?: Maybe<Sexe[] | Sexe>;
+  progresses_every?: Maybe<ProgressWhereInput>;
+  progresses_some?: Maybe<ProgressWhereInput>;
+  progresses_none?: Maybe<ProgressWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface ProgressUpdateWithWhereUniqueWithoutVideoInput {
+  where: ProgressWhereUniqueInput;
+  data: ProgressUpdateWithoutVideoDataInput;
+}
+
+export interface ProgressUpdateWithoutUserDataInput {
+  avancement?: Maybe<Float>;
+  video?: Maybe<VideoUpdateOneRequiredWithoutProgressInput>;
+}
+
+export interface ProgressUpdateWithoutVideoDataInput {
+  avancement?: Maybe<Float>;
+  user?: Maybe<UserUpdateOneRequiredWithoutProgressesInput>;
+}
+
+export interface SerieWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  display?: Maybe<DisplayWhereInput>;
+  seasons_every?: Maybe<SeasonWhereInput>;
+  seasons_some?: Maybe<SeasonWhereInput>;
+  seasons_none?: Maybe<SeasonWhereInput>;
+  color?: Maybe<String>;
+  color_not?: Maybe<String>;
+  color_in?: Maybe<String[] | String>;
+  color_not_in?: Maybe<String[] | String>;
+  color_lt?: Maybe<String>;
+  color_lte?: Maybe<String>;
+  color_gt?: Maybe<String>;
+  color_gte?: Maybe<String>;
+  color_contains?: Maybe<String>;
+  color_not_contains?: Maybe<String>;
+  color_starts_with?: Maybe<String>;
+  color_not_starts_with?: Maybe<String>;
+  color_ends_with?: Maybe<String>;
+  color_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SerieWhereInput[] | SerieWhereInput>;
+  OR?: Maybe<SerieWhereInput[] | SerieWhereInput>;
+  NOT?: Maybe<SerieWhereInput[] | SerieWhereInput>;
+}
+
+export interface ProgressUpsertWithWhereUniqueWithoutVideoInput {
+  where: ProgressWhereUniqueInput;
+  update: ProgressUpdateWithoutVideoDataInput;
+  create: ProgressCreateWithoutVideoInput;
+}
+
+export interface SeasonUpsertWithWhereUniqueNestedInput {
+  where: SeasonWhereUniqueInput;
+  update: SeasonUpdateDataInput;
+  create: SeasonCreateInput;
+}
+
+export interface ProgressScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  avancement?: Maybe<Float>;
+  avancement_not?: Maybe<Float>;
+  avancement_in?: Maybe<Float[] | Float>;
+  avancement_not_in?: Maybe<Float[] | Float>;
+  avancement_lt?: Maybe<Float>;
+  avancement_lte?: Maybe<Float>;
+  avancement_gt?: Maybe<Float>;
+  avancement_gte?: Maybe<Float>;
+  AND?: Maybe<ProgressScalarWhereInput[] | ProgressScalarWhereInput>;
+  OR?: Maybe<ProgressScalarWhereInput[] | ProgressScalarWhereInput>;
+  NOT?: Maybe<ProgressScalarWhereInput[] | ProgressScalarWhereInput>;
+}
+
+export interface DisplayUpdateInput {
+  name?: Maybe<String>;
+  type?: Maybe<MediaType>;
   trailer?: Maybe<String>;
   big?: Maybe<String>;
   medium?: Maybe<String>;
   small?: Maybe<String>;
+  likeable?: Maybe<Likeable>;
 }
 
-export interface UserUpdateManyMutationInput {
-  username?: Maybe<String>;
-  password?: Maybe<String>;
-  firstname?: Maybe<String>;
-  lastname?: Maybe<String>;
+export interface ProgressUpdateManyWithWhereNestedInput {
+  where: ProgressScalarWhereInput;
+  data: ProgressUpdateManyDataInput;
 }
 
-export interface DisplayUpsertNestedInput {
-  update: DisplayUpdateDataInput;
-  create: DisplayCreateInput;
+export interface SeasonSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SeasonWhereInput>;
+  AND?: Maybe<SeasonSubscriptionWhereInput[] | SeasonSubscriptionWhereInput>;
+  OR?: Maybe<SeasonSubscriptionWhereInput[] | SeasonSubscriptionWhereInput>;
+  NOT?: Maybe<SeasonSubscriptionWhereInput[] | SeasonSubscriptionWhereInput>;
 }
 
-export interface SerieUpdateManyMutationInput {
-  name?: Maybe<String>;
+export interface VideoUpdateManyWithWhereNestedInput {
+  where: VideoScalarWhereInput;
+  data: VideoUpdateManyDataInput;
 }
-
-export interface VideoUpsertWithWhereUniqueWithoutSeasonInput {
-  where: VideoWhereUniqueInput;
-  update: VideoUpdateWithoutSeasonDataInput;
-  create: VideoCreateWithoutSeasonInput;
-}
-
-export type SeasonWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
 
 export interface VideoScalarWhereInput {
   id?: Maybe<ID_Input>;
@@ -846,183 +1585,67 @@ export interface VideoScalarWhereInput {
   NOT?: Maybe<VideoScalarWhereInput[] | VideoScalarWhereInput>;
 }
 
-export interface SeasonUpdateWithoutEpisodesDataInput {
-  name?: Maybe<String>;
+export interface VideoUpsertWithWhereUniqueWithoutSeasonInput {
+  where: VideoWhereUniqueInput;
+  update: VideoUpdateWithoutSeasonDataInput;
+  create: VideoCreateWithoutSeasonInput;
 }
 
-export interface SerieCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  display?: Maybe<DisplayCreateOneInput>;
-  seasons?: Maybe<SeasonCreateManyInput>;
+export interface ProgressUpdateManyDataInput {
+  avancement?: Maybe<Float>;
 }
 
-export interface SeasonUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface VideoUpdateManyDataInput {
+export interface VideoUpdateInput {
   name?: Maybe<String>;
   url?: Maybe<String>;
+  display?: Maybe<DisplayUpdateOneRequiredInput>;
+  season?: Maybe<SeasonUpdateOneWithoutEpisodesInput>;
+  progress?: Maybe<ProgressUpdateManyWithoutVideoInput>;
 }
 
-export interface VideoUpdateManyWithWhereNestedInput {
-  where: VideoScalarWhereInput;
-  data: VideoUpdateManyDataInput;
-}
-
-export interface SerieWhereInput {
+export interface ProgressCreateInput {
   id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
+  avancement: Float;
+  video: VideoCreateOneWithoutProgressInput;
+  user: UserCreateOneWithoutProgressesInput;
+}
+
+export interface SeasonUpdateManyInput {
+  create?: Maybe<SeasonCreateInput[] | SeasonCreateInput>;
+  update?: Maybe<
+    | SeasonUpdateWithWhereUniqueNestedInput[]
+    | SeasonUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | SeasonUpsertWithWhereUniqueNestedInput[]
+    | SeasonUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
+  connect?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
+  set?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
+  disconnect?: Maybe<SeasonWhereUniqueInput[] | SeasonWhereUniqueInput>;
+  deleteMany?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
+  updateMany?: Maybe<
+    | SeasonUpdateManyWithWhereNestedInput[]
+    | SeasonUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SeasonUpdateManyDataInput {
   name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  display?: Maybe<DisplayWhereInput>;
-  seasons_every?: Maybe<SeasonWhereInput>;
-  seasons_some?: Maybe<SeasonWhereInput>;
-  seasons_none?: Maybe<SeasonWhereInput>;
-  AND?: Maybe<SerieWhereInput[] | SerieWhereInput>;
-  OR?: Maybe<SerieWhereInput[] | SerieWhereInput>;
-  NOT?: Maybe<SerieWhereInput[] | SerieWhereInput>;
 }
 
-export interface SeasonSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SeasonWhereInput>;
-  AND?: Maybe<SeasonSubscriptionWhereInput[] | SeasonSubscriptionWhereInput>;
-  OR?: Maybe<SeasonSubscriptionWhereInput[] | SeasonSubscriptionWhereInput>;
-  NOT?: Maybe<SeasonSubscriptionWhereInput[] | SeasonSubscriptionWhereInput>;
-}
-
-export interface SeasonUpdateManyWithWhereNestedInput {
-  where: SeasonScalarWhereInput;
-  data: SeasonUpdateManyDataInput;
-}
-
-export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
+export interface UserUpdateInput {
   username?: Maybe<String>;
-  username_not?: Maybe<String>;
-  username_in?: Maybe<String[] | String>;
-  username_not_in?: Maybe<String[] | String>;
-  username_lt?: Maybe<String>;
-  username_lte?: Maybe<String>;
-  username_gt?: Maybe<String>;
-  username_gte?: Maybe<String>;
-  username_contains?: Maybe<String>;
-  username_not_contains?: Maybe<String>;
-  username_starts_with?: Maybe<String>;
-  username_not_starts_with?: Maybe<String>;
-  username_ends_with?: Maybe<String>;
-  username_not_ends_with?: Maybe<String>;
+  email?: Maybe<String>;
   password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
   firstname?: Maybe<String>;
-  firstname_not?: Maybe<String>;
-  firstname_in?: Maybe<String[] | String>;
-  firstname_not_in?: Maybe<String[] | String>;
-  firstname_lt?: Maybe<String>;
-  firstname_lte?: Maybe<String>;
-  firstname_gt?: Maybe<String>;
-  firstname_gte?: Maybe<String>;
-  firstname_contains?: Maybe<String>;
-  firstname_not_contains?: Maybe<String>;
-  firstname_starts_with?: Maybe<String>;
-  firstname_not_starts_with?: Maybe<String>;
-  firstname_ends_with?: Maybe<String>;
-  firstname_not_ends_with?: Maybe<String>;
   lastname?: Maybe<String>;
-  lastname_not?: Maybe<String>;
-  lastname_in?: Maybe<String[] | String>;
-  lastname_not_in?: Maybe<String[] | String>;
-  lastname_lt?: Maybe<String>;
-  lastname_lte?: Maybe<String>;
-  lastname_gt?: Maybe<String>;
-  lastname_gte?: Maybe<String>;
-  lastname_contains?: Maybe<String>;
-  lastname_not_contains?: Maybe<String>;
-  lastname_starts_with?: Maybe<String>;
-  lastname_not_starts_with?: Maybe<String>;
-  lastname_ends_with?: Maybe<String>;
-  lastname_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface VideoCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  url: String;
-  display: DisplayCreateOneInput;
-  season?: Maybe<SeasonCreateOneWithoutEpisodesInput>;
+  birthday?: Maybe<DateTimeInput>;
+  preferences?: Maybe<DisplayUpdateManyInput>;
+  description?: Maybe<String>;
+  sexe?: Maybe<Sexe>;
+  progresses?: Maybe<ProgressUpdateManyWithoutUserInput>;
 }
 
 export interface NodeNode {
@@ -1051,21 +1674,172 @@ export interface VideoPreviousValuesSubscription
   url: () => Promise<AsyncIterator<String>>;
 }
 
-export interface SeasonEdge {
-  node: Season;
+export interface User {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  username: String;
+  email?: String;
+  password?: String;
+  firstname?: String;
+  lastname?: String;
+  birthday?: DateTimeOutput;
+  description?: String;
+  sexe?: Sexe;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  username: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  firstname: () => Promise<String>;
+  lastname: () => Promise<String>;
+  birthday: () => Promise<DateTimeOutput>;
+  preferences: <T = FragmentableArray<Display>>(args?: {
+    where?: DisplayWhereInput;
+    orderBy?: DisplayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  description: () => Promise<String>;
+  sexe: () => Promise<Sexe>;
+  progresses: <T = FragmentableArray<Progress>>(args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  username: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  firstname: () => Promise<AsyncIterator<String>>;
+  lastname: () => Promise<AsyncIterator<String>>;
+  birthday: () => Promise<AsyncIterator<DateTimeOutput>>;
+  preferences: <T = Promise<AsyncIterator<DisplaySubscription>>>(args?: {
+    where?: DisplayWhereInput;
+    orderBy?: DisplayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  description: () => Promise<AsyncIterator<String>>;
+  sexe: () => Promise<AsyncIterator<Sexe>>;
+  progresses: <T = Promise<AsyncIterator<ProgressSubscription>>>(args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  username: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  firstname: () => Promise<String>;
+  lastname: () => Promise<String>;
+  birthday: () => Promise<DateTimeOutput>;
+  preferences: <T = FragmentableArray<Display>>(args?: {
+    where?: DisplayWhereInput;
+    orderBy?: DisplayOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  description: () => Promise<String>;
+  sexe: () => Promise<Sexe>;
+  progresses: <T = FragmentableArray<Progress>>(args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface DisplayEdge {
+  node: Display;
   cursor: String;
 }
 
-export interface SeasonEdgePromise extends Promise<SeasonEdge>, Fragmentable {
-  node: <T = SeasonPromise>() => T;
+export interface DisplayEdgePromise extends Promise<DisplayEdge>, Fragmentable {
+  node: <T = DisplayPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface SeasonEdgeSubscription
-  extends Promise<AsyncIterator<SeasonEdge>>,
+export interface DisplayEdgeSubscription
+  extends Promise<AsyncIterator<DisplayEdge>>,
     Fragmentable {
-  node: <T = SeasonSubscription>() => T;
+  node: <T = DisplaySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface DisplayConnection {
+  pageInfo: PageInfo;
+  edges: DisplayEdge[];
+}
+
+export interface DisplayConnectionPromise
+  extends Promise<DisplayConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<DisplayEdge>>() => T;
+  aggregate: <T = AggregateDisplayPromise>() => T;
+}
+
+export interface DisplayConnectionSubscription
+  extends Promise<AsyncIterator<DisplayConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<DisplayEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateDisplaySubscription>() => T;
+}
+
+export interface AggregateDisplay {
+  count: Int;
+}
+
+export interface AggregateDisplayPromise
+  extends Promise<AggregateDisplay>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateDisplaySubscription
+  extends Promise<AsyncIterator<AggregateDisplay>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PageInfo {
@@ -1091,34 +1865,18 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateSeason {
+export interface AggregateVideo {
   count: Int;
 }
 
-export interface AggregateSeasonPromise
-  extends Promise<AggregateSeason>,
+export interface AggregateVideoPromise
+  extends Promise<AggregateVideo>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateSeasonSubscription
-  extends Promise<AsyncIterator<AggregateSeason>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AggregateDisplay {
-  count: Int;
-}
-
-export interface AggregateDisplayPromise
-  extends Promise<AggregateDisplay>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateDisplaySubscription
-  extends Promise<AsyncIterator<AggregateDisplay>>,
+export interface AggregateVideoSubscription
+  extends Promise<AsyncIterator<AggregateVideo>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1127,10 +1885,14 @@ export interface UserPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
-  username?: String;
+  username: String;
+  email?: String;
   password?: String;
   firstname?: String;
   lastname?: String;
+  birthday?: DateTimeOutput;
+  description?: String;
+  sexe?: Sexe;
 }
 
 export interface UserPreviousValuesPromise
@@ -1140,9 +1902,13 @@ export interface UserPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   username: () => Promise<String>;
+  email: () => Promise<String>;
   password: () => Promise<String>;
   firstname: () => Promise<String>;
   lastname: () => Promise<String>;
+  birthday: () => Promise<DateTimeOutput>;
+  description: () => Promise<String>;
+  sexe: () => Promise<Sexe>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1152,30 +1918,35 @@ export interface UserPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   username: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   firstname: () => Promise<AsyncIterator<String>>;
   lastname: () => Promise<AsyncIterator<String>>;
+  birthday: () => Promise<AsyncIterator<DateTimeOutput>>;
+  description: () => Promise<AsyncIterator<String>>;
+  sexe: () => Promise<AsyncIterator<Sexe>>;
 }
 
-export interface SeasonConnection {
-  pageInfo: PageInfo;
-  edges: SeasonEdge[];
+export interface SeriePreviousValues {
+  id: ID_Output;
+  name: String;
+  color?: String;
 }
 
-export interface SeasonConnectionPromise
-  extends Promise<SeasonConnection>,
+export interface SeriePreviousValuesPromise
+  extends Promise<SeriePreviousValues>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SeasonEdge>>() => T;
-  aggregate: <T = AggregateSeasonPromise>() => T;
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  color: () => Promise<String>;
 }
 
-export interface SeasonConnectionSubscription
-  extends Promise<AsyncIterator<SeasonConnection>>,
+export interface SeriePreviousValuesSubscription
+  extends Promise<AsyncIterator<SeriePreviousValues>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SeasonEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSeasonSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  color: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BatchPayload {
@@ -1194,6 +1965,27 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface VideoConnection {
+  pageInfo: PageInfo;
+  edges: VideoEdge[];
+}
+
+export interface VideoConnectionPromise
+  extends Promise<VideoConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VideoEdge>>() => T;
+  aggregate: <T = AggregateVideoPromise>() => T;
+}
+
+export interface VideoConnectionSubscription
+  extends Promise<AsyncIterator<VideoConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<VideoEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateVideoSubscription>() => T;
+}
+
 export interface VideoEdge {
   node: Video;
   cursor: String;
@@ -1209,81 +2001,6 @@ export interface VideoEdgeSubscription
     Fragmentable {
   node: <T = VideoSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Video {
-  id: ID_Output;
-  name: String;
-  url: String;
-}
-
-export interface VideoPromise extends Promise<Video>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  url: () => Promise<String>;
-  display: <T = DisplayPromise>() => T;
-  season: <T = SeasonPromise>() => T;
-}
-
-export interface VideoSubscription
-  extends Promise<AsyncIterator<Video>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
-  display: <T = DisplaySubscription>() => T;
-  season: <T = SeasonSubscription>() => T;
-}
-
-export interface VideoNullablePromise
-  extends Promise<Video | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  url: () => Promise<String>;
-  display: <T = DisplayPromise>() => T;
-  season: <T = SeasonPromise>() => T;
 }
 
 export interface UserConnection {
@@ -1307,57 +2024,105 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateSerie {
+  count: Int;
+}
+
+export interface AggregateSeriePromise
+  extends Promise<AggregateSerie>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSerieSubscription
+  extends Promise<AsyncIterator<AggregateSerie>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface Display {
   id: ID_Output;
+  name?: String;
+  type?: MediaType;
   trailer?: String;
   big?: String;
   medium?: String;
   small?: String;
+  likeable?: Likeable;
 }
 
 export interface DisplayPromise extends Promise<Display>, Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  type: () => Promise<MediaType>;
   trailer: () => Promise<String>;
   big: () => Promise<String>;
   medium: () => Promise<String>;
   small: () => Promise<String>;
+  likeable: () => Promise<Likeable>;
 }
 
 export interface DisplaySubscription
   extends Promise<AsyncIterator<Display>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  type: () => Promise<AsyncIterator<MediaType>>;
   trailer: () => Promise<AsyncIterator<String>>;
   big: () => Promise<AsyncIterator<String>>;
   medium: () => Promise<AsyncIterator<String>>;
   small: () => Promise<AsyncIterator<String>>;
+  likeable: () => Promise<AsyncIterator<Likeable>>;
 }
 
 export interface DisplayNullablePromise
   extends Promise<Display | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  type: () => Promise<MediaType>;
   trailer: () => Promise<String>;
   big: () => Promise<String>;
   medium: () => Promise<String>;
   small: () => Promise<String>;
+  likeable: () => Promise<Likeable>;
 }
 
-export interface DisplayEdge {
-  node: Display;
-  cursor: String;
+export interface SerieConnection {
+  pageInfo: PageInfo;
+  edges: SerieEdge[];
 }
 
-export interface DisplayEdgePromise extends Promise<DisplayEdge>, Fragmentable {
-  node: <T = DisplayPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface DisplayEdgeSubscription
-  extends Promise<AsyncIterator<DisplayEdge>>,
+export interface SerieConnectionPromise
+  extends Promise<SerieConnection>,
     Fragmentable {
-  node: <T = DisplaySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SerieEdge>>() => T;
+  aggregate: <T = AggregateSeriePromise>() => T;
+}
+
+export interface SerieConnectionSubscription
+  extends Promise<AsyncIterator<SerieConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SerieEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSerieSubscription>() => T;
 }
 
 export interface DisplaySubscriptionPayload {
@@ -1385,236 +2150,209 @@ export interface DisplaySubscriptionPayloadSubscription
   previousValues: <T = DisplayPreviousValuesSubscription>() => T;
 }
 
-export interface AggregateSerie {
+export interface AggregateSeason {
   count: Int;
 }
 
-export interface AggregateSeriePromise
-  extends Promise<AggregateSerie>,
+export interface AggregateSeasonPromise
+  extends Promise<AggregateSeason>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateSerieSubscription
-  extends Promise<AsyncIterator<AggregateSerie>>,
+export interface AggregateSeasonSubscription
+  extends Promise<AsyncIterator<AggregateSeason>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface DisplayPreviousValues {
   id: ID_Output;
+  name?: String;
+  type?: MediaType;
   trailer?: String;
   big?: String;
   medium?: String;
   small?: String;
+  likeable?: Likeable;
 }
 
 export interface DisplayPreviousValuesPromise
   extends Promise<DisplayPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  type: () => Promise<MediaType>;
   trailer: () => Promise<String>;
   big: () => Promise<String>;
   medium: () => Promise<String>;
   small: () => Promise<String>;
+  likeable: () => Promise<Likeable>;
 }
 
 export interface DisplayPreviousValuesSubscription
   extends Promise<AsyncIterator<DisplayPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  type: () => Promise<AsyncIterator<MediaType>>;
   trailer: () => Promise<AsyncIterator<String>>;
   big: () => Promise<AsyncIterator<String>>;
   medium: () => Promise<AsyncIterator<String>>;
   small: () => Promise<AsyncIterator<String>>;
+  likeable: () => Promise<AsyncIterator<Likeable>>;
 }
 
-export interface SerieConnection {
+export interface SeasonConnection {
   pageInfo: PageInfo;
-  edges: SerieEdge[];
+  edges: SeasonEdge[];
 }
 
-export interface SerieConnectionPromise
-  extends Promise<SerieConnection>,
+export interface SeasonConnectionPromise
+  extends Promise<SeasonConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SerieEdge>>() => T;
-  aggregate: <T = AggregateSeriePromise>() => T;
+  edges: <T = FragmentableArray<SeasonEdge>>() => T;
+  aggregate: <T = AggregateSeasonPromise>() => T;
 }
 
-export interface SerieConnectionSubscription
-  extends Promise<AsyncIterator<SerieConnection>>,
+export interface SeasonConnectionSubscription
+  extends Promise<AsyncIterator<SeasonConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SerieEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSerieSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SeasonEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSeasonSubscription>() => T;
 }
 
-export interface DisplayConnection {
-  pageInfo: PageInfo;
-  edges: DisplayEdge[];
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface DisplayConnectionPromise
-  extends Promise<DisplayConnection>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<DisplayEdge>>() => T;
-  aggregate: <T = AggregateDisplayPromise>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
-export interface DisplayConnectionSubscription
-  extends Promise<AsyncIterator<DisplayConnection>>,
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<DisplayEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateDisplaySubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface AggregateVideo {
+export interface AggregateProgress {
   count: Int;
 }
 
-export interface AggregateVideoPromise
-  extends Promise<AggregateVideo>,
+export interface AggregateProgressPromise
+  extends Promise<AggregateProgress>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateVideoSubscription
-  extends Promise<AsyncIterator<AggregateVideo>>,
+export interface AggregateProgressSubscription
+  extends Promise<AsyncIterator<AggregateProgress>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface SeasonSubscriptionPayload {
+export interface ProgressSubscriptionPayload {
   mutation: MutationType;
-  node: Season;
+  node: Progress;
   updatedFields: String[];
-  previousValues: SeasonPreviousValues;
+  previousValues: ProgressPreviousValues;
 }
 
-export interface SeasonSubscriptionPayloadPromise
-  extends Promise<SeasonSubscriptionPayload>,
+export interface ProgressSubscriptionPayloadPromise
+  extends Promise<ProgressSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = SeasonPromise>() => T;
+  node: <T = ProgressPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = SeasonPreviousValuesPromise>() => T;
+  previousValues: <T = ProgressPreviousValuesPromise>() => T;
 }
 
-export interface SeasonSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SeasonSubscriptionPayload>>,
+export interface ProgressSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ProgressSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SeasonSubscription>() => T;
+  node: <T = ProgressSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = SeasonPreviousValuesSubscription>() => T;
+  previousValues: <T = ProgressPreviousValuesSubscription>() => T;
 }
 
-export interface UserEdge {
-  node: User;
-  cursor: String;
+export interface ProgressConnection {
+  pageInfo: PageInfo;
+  edges: ProgressEdge[];
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface ProgressConnectionPromise
+  extends Promise<ProgressConnection>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProgressEdge>>() => T;
+  aggregate: <T = AggregateProgressPromise>() => T;
 }
 
-export interface User {
+export interface ProgressConnectionSubscription
+  extends Promise<AsyncIterator<ProgressConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProgressEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProgressSubscription>() => T;
+}
+
+export interface ProgressPreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  username?: String;
-  password?: String;
-  firstname?: String;
-  lastname?: String;
+  avancement: Float;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
+export interface ProgressPreviousValuesPromise
+  extends Promise<ProgressPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  firstname: () => Promise<String>;
-  lastname: () => Promise<String>;
+  avancement: () => Promise<Float>;
 }
 
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface ProgressPreviousValuesSubscription
+  extends Promise<AsyncIterator<ProgressPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  username: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  firstname: () => Promise<AsyncIterator<String>>;
-  lastname: () => Promise<AsyncIterator<String>>;
+  avancement: () => Promise<AsyncIterator<Float>>;
 }
 
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  username: () => Promise<String>;
-  password: () => Promise<String>;
-  firstname: () => Promise<String>;
-  lastname: () => Promise<String>;
-}
-
-export interface SeriePreviousValues {
-  id: ID_Output;
-  name: String;
-}
-
-export interface SeriePreviousValuesPromise
-  extends Promise<SeriePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface SeriePreviousValuesSubscription
-  extends Promise<AsyncIterator<SeriePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface SerieSubscriptionPayload {
+export interface VideoSubscriptionPayload {
   mutation: MutationType;
-  node: Serie;
+  node: Video;
   updatedFields: String[];
-  previousValues: SeriePreviousValues;
+  previousValues: VideoPreviousValues;
 }
 
-export interface SerieSubscriptionPayloadPromise
-  extends Promise<SerieSubscriptionPayload>,
+export interface VideoSubscriptionPayloadPromise
+  extends Promise<VideoSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = SeriePromise>() => T;
+  node: <T = VideoPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = SeriePreviousValuesPromise>() => T;
+  previousValues: <T = VideoPreviousValuesPromise>() => T;
 }
 
-export interface SerieSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<SerieSubscriptionPayload>>,
+export interface VideoSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VideoSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = SerieSubscription>() => T;
+  node: <T = VideoSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = SeriePreviousValuesSubscription>() => T;
+  previousValues: <T = VideoPreviousValuesSubscription>() => T;
 }
 
 export interface Season {
@@ -1668,6 +2406,180 @@ export interface SeasonNullablePromise
   }) => T;
 }
 
+export interface Serie {
+  id: ID_Output;
+  name: String;
+  color?: String;
+}
+
+export interface SeriePromise extends Promise<Serie>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  display: <T = DisplayPromise>() => T;
+  seasons: <T = FragmentableArray<Season>>(args?: {
+    where?: SeasonWhereInput;
+    orderBy?: SeasonOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  color: () => Promise<String>;
+}
+
+export interface SerieSubscription
+  extends Promise<AsyncIterator<Serie>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  display: <T = DisplaySubscription>() => T;
+  seasons: <T = Promise<AsyncIterator<SeasonSubscription>>>(args?: {
+    where?: SeasonWhereInput;
+    orderBy?: SeasonOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  color: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SerieNullablePromise
+  extends Promise<Serie | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  display: <T = DisplayPromise>() => T;
+  seasons: <T = FragmentableArray<Season>>(args?: {
+    where?: SeasonWhereInput;
+    orderBy?: SeasonOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  color: () => Promise<String>;
+}
+
+export interface Progress {
+  id: ID_Output;
+  avancement: Float;
+}
+
+export interface ProgressPromise extends Promise<Progress>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  avancement: () => Promise<Float>;
+  video: <T = VideoPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface ProgressSubscription
+  extends Promise<AsyncIterator<Progress>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  avancement: () => Promise<AsyncIterator<Float>>;
+  video: <T = VideoSubscription>() => T;
+  user: <T = UserSubscription>() => T;
+}
+
+export interface ProgressNullablePromise
+  extends Promise<Progress | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  avancement: () => Promise<Float>;
+  video: <T = VideoPromise>() => T;
+  user: <T = UserPromise>() => T;
+}
+
+export interface SerieSubscriptionPayload {
+  mutation: MutationType;
+  node: Serie;
+  updatedFields: String[];
+  previousValues: SeriePreviousValues;
+}
+
+export interface SerieSubscriptionPayloadPromise
+  extends Promise<SerieSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SeriePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SeriePreviousValuesPromise>() => T;
+}
+
+export interface SerieSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SerieSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SerieSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SeriePreviousValuesSubscription>() => T;
+}
+
+export interface Video {
+  id: ID_Output;
+  name: String;
+  url: String;
+}
+
+export interface VideoPromise extends Promise<Video>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  url: () => Promise<String>;
+  display: <T = DisplayPromise>() => T;
+  season: <T = SeasonPromise>() => T;
+  progress: <T = FragmentableArray<Progress>>(args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface VideoSubscription
+  extends Promise<AsyncIterator<Video>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  url: () => Promise<AsyncIterator<String>>;
+  display: <T = DisplaySubscription>() => T;
+  season: <T = SeasonSubscription>() => T;
+  progress: <T = Promise<AsyncIterator<ProgressSubscription>>>(args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface VideoNullablePromise
+  extends Promise<Video | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  url: () => Promise<String>;
+  display: <T = DisplayPromise>() => T;
+  season: <T = SeasonPromise>() => T;
+  progress: <T = FragmentableArray<Progress>>(args?: {
+    where?: ProgressWhereInput;
+    orderBy?: ProgressOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
 export interface SeasonPreviousValues {
   id: ID_Output;
   name?: String;
@@ -1687,6 +2599,67 @@ export interface SeasonPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
+export interface SeasonSubscriptionPayload {
+  mutation: MutationType;
+  node: Season;
+  updatedFields: String[];
+  previousValues: SeasonPreviousValues;
+}
+
+export interface SeasonSubscriptionPayloadPromise
+  extends Promise<SeasonSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = SeasonPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = SeasonPreviousValuesPromise>() => T;
+}
+
+export interface SeasonSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<SeasonSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = SeasonSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = SeasonPreviousValuesSubscription>() => T;
+}
+
+export interface ProgressEdge {
+  node: Progress;
+  cursor: String;
+}
+
+export interface ProgressEdgePromise
+  extends Promise<ProgressEdge>,
+    Fragmentable {
+  node: <T = ProgressPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ProgressEdgeSubscription
+  extends Promise<AsyncIterator<ProgressEdge>>,
+    Fragmentable {
+  node: <T = ProgressSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SeasonEdge {
+  node: Season;
+  cursor: String;
+}
+
+export interface SeasonEdgePromise extends Promise<SeasonEdge>, Fragmentable {
+  node: <T = SeasonPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SeasonEdgeSubscription
+  extends Promise<AsyncIterator<SeasonEdge>>,
+    Fragmentable {
+  node: <T = SeasonSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface SerieEdge {
   node: Serie;
   cursor: String;
@@ -1704,104 +2677,21 @@ export interface SerieEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface VideoSubscriptionPayload {
-  mutation: MutationType;
-  node: Video;
-  updatedFields: String[];
-  previousValues: VideoPreviousValues;
+export interface UserEdge {
+  node: User;
+  cursor: String;
 }
 
-export interface VideoSubscriptionPayloadPromise
-  extends Promise<VideoSubscriptionPayload>,
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = VideoPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = VideoPreviousValuesPromise>() => T;
-}
-
-export interface VideoSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<VideoSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = VideoSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = VideoPreviousValuesSubscription>() => T;
-}
-
-export interface VideoConnection {
-  pageInfo: PageInfo;
-  edges: VideoEdge[];
-}
-
-export interface VideoConnectionPromise
-  extends Promise<VideoConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<VideoEdge>>() => T;
-  aggregate: <T = AggregateVideoPromise>() => T;
-}
-
-export interface VideoConnectionSubscription
-  extends Promise<AsyncIterator<VideoConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<VideoEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateVideoSubscription>() => T;
-}
-
-export interface Serie {
-  id: ID_Output;
-  name: String;
-}
-
-export interface SeriePromise extends Promise<Serie>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  display: <T = DisplayPromise>() => T;
-  seasons: <T = FragmentableArray<Season>>(args?: {
-    where?: SeasonWhereInput;
-    orderBy?: SeasonOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface SerieSubscription
-  extends Promise<AsyncIterator<Serie>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  display: <T = DisplaySubscription>() => T;
-  seasons: <T = Promise<AsyncIterator<SeasonSubscription>>>(args?: {
-    where?: SeasonWhereInput;
-    orderBy?: SeasonOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface SerieNullablePromise
-  extends Promise<Serie | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  display: <T = DisplayPromise>() => T;
-  seasons: <T = FragmentableArray<Season>>(args?: {
-    where?: SeasonWhereInput;
-    orderBy?: SeasonOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -1817,6 +2707,17 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 export type String = string;
 
 /*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
+
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
+
+/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1827,21 +2728,27 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
+export type Float = number;
 
 /**
  * Model Metadata
  */
 
 export const models: Model[] = [
+  {
+    name: "MediaType",
+    embedded: false
+  },
+  {
+    name: "Sexe",
+    embedded: false
+  },
+  {
+    name: "Likeable",
+    embedded: false
+  },
   {
     name: "User",
     embedded: false
@@ -1860,6 +2767,10 @@ export const models: Model[] = [
   },
   {
     name: "Season",
+    embedded: false
+  },
+  {
+    name: "Progress",
     embedded: false
   }
 ];

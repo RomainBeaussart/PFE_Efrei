@@ -1,11 +1,36 @@
+enum MediaType {
+    SERIE
+    MOVIE
+    MANGA
+    ANIME
+}
+
+enum Sexe {
+    MALE
+    FEMALE
+    OTHER
+}
+
+enum Likeable {
+    LIKEABLE
+    NOT_LIKEABLE
+}
+
 type User {
     id: ID! @id
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
-    username: String @unique
+    username: String! @unique
+    email: String @unique
     password: String
     firstname: String
     lastname: String
+    birthday: DateTime
+    preferences: [Display!] @relation(name: "UserPreferences")
+    description: String
+    sexe: Sexe
+
+    progresses: [Progress] @relation(name: "ProgressUser")
 }
 
 type Video {
@@ -14,14 +39,18 @@ type Video {
     url: String!
     display: Display! @relation(name: "VideoDisplay" link: INLINE)
     season: Season @relation(name: "SeasonVideo")
+    progress: [Progress!] @relation(name: "ProgressVideo")
 }
 
 type Display {
     id: ID! @id
+    name: String
+    type: MediaType
     trailer: String
     big: String
     medium: String
     small: String
+    likeable: Likeable @default(value: NOT_LIKEABLE)
 }
 
 type Serie {
@@ -29,11 +58,19 @@ type Serie {
     name: String!
     display: Display @relation(name: "SerieDisplay" link: INLINE)
     seasons: [Season!]! @relation(name: "SerieSeasons")
+    color: String
 }
 
 type Season {
     id: ID! @id
     name: String
     episodes: [Video!]! @relation(name: "SeasonVideo")
+}
+
+type Progress {
+    id: ID! @id
+    avancement: Float!
+    video: Video! @relation(name: "ProgressVideo")
+    user: User! @relation(name: "ProgressUser")
 }
 

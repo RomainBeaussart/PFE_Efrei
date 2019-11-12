@@ -2,8 +2,7 @@
     <HeadHome
         width="100%"
         v-bind:videos="headHomeVideos"
-    >
-    </HeadHome>
+    ></HeadHome>
 </template>
 
 <script lang="ts">
@@ -20,7 +19,7 @@ import HeadHome from './HeadHome.vue'
         HeadHome
     }
 })
-export default class Home extends Vue{
+export default class Home extends Vue {
 
     @Apollo({
         query: VIDEOS,

@@ -1,5 +1,6 @@
 mutation CreateUser ($username: String!,
-    $password: String!, $firstname: String, $lastname: String
+    $password: String!, $firstname: String, $lastname: String,
+    $email: String!, $preferences: [ID]!
     ) {
         signup(
             data: {
@@ -7,6 +8,8 @@ mutation CreateUser ($username: String!,
                 password: $password
                 firstname: $firstname
                 lastname: $lastname
+                email: $email,
+                preferences: { connect: $preferences}
             }
         ) { id }
     }

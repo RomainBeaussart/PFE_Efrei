@@ -6,6 +6,7 @@ user1: createUser(data: {
     firstname: "Romain"
     lastname: "Beaussart"
     password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+    email: "r.beaussart62@gmail.com"
 }) { id }
 
 user2: createUser(data: {
@@ -13,6 +14,7 @@ user2: createUser(data: {
     firstname: "Jimmy"
     lastname: "Clabault"
     password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+    email: "a@g.com"
 }) { id }
 
 user3: createUser(data: {
@@ -20,6 +22,7 @@ user3: createUser(data: {
     firstname: "Edouard"
     lastname: "Desmyter"
     password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+    email: "b@g.com"
 }) { id }
 
 user4: createUser(data: {
@@ -27,6 +30,7 @@ user4: createUser(data: {
     firstname: "Guillaume"
     lastname: "Aprin"
     password: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+    email: "c@g.com"
 }) { id }
 
 
@@ -86,4 +90,234 @@ movie5: createVideo(data: {
         }
     }
 }) { id }
+
+# display1: createDisplay( data: {
+#     name: "",
+#     type: SERIE,
+#     small: ""
+#     likeable: LIKEABLE
+# }) { id }
+
+serie1: createSerie(data: {
+    name: "Stranger Things"
+    color: "ff1515"
+    display: {
+        create: {
+            big: "https://images3.alphacoders.com/882/thumb-1920-882548.jpg"
+            medium: "https://upload.wikimedia.org/wikipedia/commons/3/38/Stranger_Things_logo.png"
+        }
+    }
+    seasons: {
+        create: [
+            {
+            name: "Season 1"
+            episodes: {
+                create: [
+                    {
+                        name: "Chapiter 1"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://m.media-amazon.com/images/M/MV5BMTUwNTE0ODYzOF5BMl5BanBnXkFtZTgwOTc0ODE0OTE@._V1_.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 2"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://i.pinimg.com/originals/57/f1/06/57f106c48c6a651ead766cc5453e24af.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 3"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://m.media-amazon.com/images/M/MV5BMTUwNTE0ODYzOF5BMl5BanBnXkFtZTgwOTc0ODE0OTE@._V1_.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 4"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://i.pinimg.com/originals/57/f1/06/57f106c48c6a651ead766cc5453e24af.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 5"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://m.media-amazon.com/images/M/MV5BMTUwNTE0ODYzOF5BMl5BanBnXkFtZTgwOTc0ODE0OTE@._V1_.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 6"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://i.pinimg.com/originals/57/f1/06/57f106c48c6a651ead766cc5453e24af.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 7"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://m.media-amazon.com/images/M/MV5BMTUwNTE0ODYzOF5BMl5BanBnXkFtZTgwOTc0ODE0OTE@._V1_.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 8"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://i.pinimg.com/originals/57/f1/06/57f106c48c6a651ead766cc5453e24af.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 9"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://m.media-amazon.com/images/M/MV5BMTUwNTE0ODYzOF5BMl5BanBnXkFtZTgwOTc0ODE0OTE@._V1_.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 10"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://i.pinimg.com/originals/57/f1/06/57f106c48c6a651ead766cc5453e24af.jpg"
+                            }
+                        }
+                    }
+                ]
+            }
+        }]
+    }
+}) { id }
+
+serie2: createSerie(data: {
+    name: "Breaking Bad"
+    color: "FCC204"
+    display: {
+        create: {
+            big: "https://www.youbioit.com/files/newimages/6958/381/breaking_bad_wallpaper.jpg"
+            medium: "https://www.presse-citron.net/wordpress_prod/wp-content/uploads/2019/02/netflix-breaking-bad.jpg"
+        }
+    }
+    seasons: {
+        create: [
+            {
+            name: "Season 1"
+            episodes: {
+                create: [
+                    {
+                        name: "Chapiter 1"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://media.artevod.com/113502_fr_image_26075.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 2"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.alg24.net/wp-content/uploads/2018/11/breaking-bad-film.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 3"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://media.artevod.com/113502_fr_image_26075.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 4"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.alg24.net/wp-content/uploads/2018/11/breaking-bad-film.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 5"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://media.artevod.com/113502_fr_image_26075.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 6"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.alg24.net/wp-content/uploads/2018/11/breaking-bad-film.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 7"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://media.artevod.com/113502_fr_image_26075.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 8"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.alg24.net/wp-content/uploads/2018/11/breaking-bad-film.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 9"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://media.artevod.com/113502_fr_image_26075.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 10"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.alg24.net/wp-content/uploads/2018/11/breaking-bad-film.jpg"
+                            }
+                        }
+                    }
+                ]
+            }
+        }]
+    }
+}) { id }
+
 }

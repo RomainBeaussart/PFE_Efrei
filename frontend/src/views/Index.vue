@@ -1,5 +1,5 @@
 <template>
-    <v-container raw fluid xs12 style="margin: 0; padding: 0">
+    <v-container raw fluid xs12 style="margin: 0; padding: 0; height: 100%">
         <v-app-bar fixed app class="elevation-0" style="background: rgba(0,0,0,0)" v-if="currentUser" pa-0 ma-0>
             <v-toolbar dense class="elevation-0 fill-width" style="background: rgba(0,0,0,0)" fixed>
                 <v-btn
@@ -12,16 +12,17 @@
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="headline text-uppercase white--text">
-                    Na Mo Naki
+                    <img src="../assets/img/logo.svg" height="30px" />
                 </v-toolbar-title>
-                <v-btn
+                <v-spacer></v-spacer>
+                <!-- <v-btn
                     text
                     @click="logout()"
                     class="white--text"
-                >Logout</v-btn>
+                >Logout</v-btn> -->
             </v-toolbar>
         </v-app-bar>
-        <router-view style="height: 100%; width: 100%; margin: 0; max-width: 100%; padding: 0 0 !important;"></router-view>
+        <router-view style="width: 100%; margin: 0; max-width: 100%; padding: 0 0 !important;"></router-view>
     </v-container>
 </template>
 <script lang="ts">

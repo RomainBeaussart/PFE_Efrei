@@ -1,0 +1,5 @@
+query User($id: ID!){
+    video(where:{ id: $id }){
+        name
+    }
+}

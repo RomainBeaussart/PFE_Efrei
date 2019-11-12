@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateDisplay {
   count: Int!
 }
 
+type AggregateProgress {
+  count: Int!
+}
+
 type AggregateSeason {
   count: Int!
 }
@@ -30,10 +34,13 @@ scalar DateTime
 
 type Display {
   id: ID!
+  name: String
+  type: MediaType
   trailer: String
   big: String
   medium: String
   small: String
+  likeable: Likeable
 }
 
 type DisplayConnection {
@@ -44,10 +51,18 @@ type DisplayConnection {
 
 input DisplayCreateInput {
   id: ID
+  name: String
+  type: MediaType
   trailer: String
   big: String
   medium: String
   small: String
+  likeable: Likeable
+}
+
+input DisplayCreateManyInput {
+  create: [DisplayCreateInput!]
+  connect: [DisplayWhereUniqueInput!]
 }
 
 input DisplayCreateOneInput {
@@ -63,6 +78,10 @@ type DisplayEdge {
 enum DisplayOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
+  type_ASC
+  type_DESC
   trailer_ASC
   trailer_DESC
   big_ASC
@@ -71,77 +90,22 @@ enum DisplayOrderByInput {
   medium_DESC
   small_ASC
   small_DESC
+  likeable_ASC
+  likeable_DESC
 }
 
 type DisplayPreviousValues {
   id: ID!
+  name: String
+  type: MediaType
   trailer: String
   big: String
   medium: String
   small: String
+  likeable: Likeable
 }
 
-type DisplaySubscriptionPayload {
-  mutation: MutationType!
-  node: Display
-  updatedFields: [String!]
-  previousValues: DisplayPreviousValues
-}
-
-input DisplaySubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: DisplayWhereInput
-  AND: [DisplaySubscriptionWhereInput!]
-  OR: [DisplaySubscriptionWhereInput!]
-  NOT: [DisplaySubscriptionWhereInput!]
-}
-
-input DisplayUpdateDataInput {
-  trailer: String
-  big: String
-  medium: String
-  small: String
-}
-
-input DisplayUpdateInput {
-  trailer: String
-  big: String
-  medium: String
-  small: String
-}
-
-input DisplayUpdateManyMutationInput {
-  trailer: String
-  big: String
-  medium: String
-  small: String
-}
-
-input DisplayUpdateOneInput {
-  create: DisplayCreateInput
-  update: DisplayUpdateDataInput
-  upsert: DisplayUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: DisplayWhereUniqueInput
-}
-
-input DisplayUpdateOneRequiredInput {
-  create: DisplayCreateInput
-  update: DisplayUpdateDataInput
-  upsert: DisplayUpsertNestedInput
-  connect: DisplayWhereUniqueInput
-}
-
-input DisplayUpsertNestedInput {
-  update: DisplayUpdateDataInput!
-  create: DisplayCreateInput!
-}
-
-input DisplayWhereInput {
+input DisplayScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -156,6 +120,24 @@ input DisplayWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  type: MediaType
+  type_not: MediaType
+  type_in: [MediaType!]
+  type_not_in: [MediaType!]
   trailer: String
   trailer_not: String
   trailer_in: [String!]
@@ -212,6 +194,215 @@ input DisplayWhereInput {
   small_not_starts_with: String
   small_ends_with: String
   small_not_ends_with: String
+  likeable: Likeable
+  likeable_not: Likeable
+  likeable_in: [Likeable!]
+  likeable_not_in: [Likeable!]
+  AND: [DisplayScalarWhereInput!]
+  OR: [DisplayScalarWhereInput!]
+  NOT: [DisplayScalarWhereInput!]
+}
+
+type DisplaySubscriptionPayload {
+  mutation: MutationType!
+  node: Display
+  updatedFields: [String!]
+  previousValues: DisplayPreviousValues
+}
+
+input DisplaySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DisplayWhereInput
+  AND: [DisplaySubscriptionWhereInput!]
+  OR: [DisplaySubscriptionWhereInput!]
+  NOT: [DisplaySubscriptionWhereInput!]
+}
+
+input DisplayUpdateDataInput {
+  name: String
+  type: MediaType
+  trailer: String
+  big: String
+  medium: String
+  small: String
+  likeable: Likeable
+}
+
+input DisplayUpdateInput {
+  name: String
+  type: MediaType
+  trailer: String
+  big: String
+  medium: String
+  small: String
+  likeable: Likeable
+}
+
+input DisplayUpdateManyDataInput {
+  name: String
+  type: MediaType
+  trailer: String
+  big: String
+  medium: String
+  small: String
+  likeable: Likeable
+}
+
+input DisplayUpdateManyInput {
+  create: [DisplayCreateInput!]
+  update: [DisplayUpdateWithWhereUniqueNestedInput!]
+  upsert: [DisplayUpsertWithWhereUniqueNestedInput!]
+  delete: [DisplayWhereUniqueInput!]
+  connect: [DisplayWhereUniqueInput!]
+  set: [DisplayWhereUniqueInput!]
+  disconnect: [DisplayWhereUniqueInput!]
+  deleteMany: [DisplayScalarWhereInput!]
+  updateMany: [DisplayUpdateManyWithWhereNestedInput!]
+}
+
+input DisplayUpdateManyMutationInput {
+  name: String
+  type: MediaType
+  trailer: String
+  big: String
+  medium: String
+  small: String
+  likeable: Likeable
+}
+
+input DisplayUpdateManyWithWhereNestedInput {
+  where: DisplayScalarWhereInput!
+  data: DisplayUpdateManyDataInput!
+}
+
+input DisplayUpdateOneInput {
+  create: DisplayCreateInput
+  update: DisplayUpdateDataInput
+  upsert: DisplayUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: DisplayWhereUniqueInput
+}
+
+input DisplayUpdateOneRequiredInput {
+  create: DisplayCreateInput
+  update: DisplayUpdateDataInput
+  upsert: DisplayUpsertNestedInput
+  connect: DisplayWhereUniqueInput
+}
+
+input DisplayUpdateWithWhereUniqueNestedInput {
+  where: DisplayWhereUniqueInput!
+  data: DisplayUpdateDataInput!
+}
+
+input DisplayUpsertNestedInput {
+  update: DisplayUpdateDataInput!
+  create: DisplayCreateInput!
+}
+
+input DisplayUpsertWithWhereUniqueNestedInput {
+  where: DisplayWhereUniqueInput!
+  update: DisplayUpdateDataInput!
+  create: DisplayCreateInput!
+}
+
+input DisplayWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  type: MediaType
+  type_not: MediaType
+  type_in: [MediaType!]
+  type_not_in: [MediaType!]
+  trailer: String
+  trailer_not: String
+  trailer_in: [String!]
+  trailer_not_in: [String!]
+  trailer_lt: String
+  trailer_lte: String
+  trailer_gt: String
+  trailer_gte: String
+  trailer_contains: String
+  trailer_not_contains: String
+  trailer_starts_with: String
+  trailer_not_starts_with: String
+  trailer_ends_with: String
+  trailer_not_ends_with: String
+  big: String
+  big_not: String
+  big_in: [String!]
+  big_not_in: [String!]
+  big_lt: String
+  big_lte: String
+  big_gt: String
+  big_gte: String
+  big_contains: String
+  big_not_contains: String
+  big_starts_with: String
+  big_not_starts_with: String
+  big_ends_with: String
+  big_not_ends_with: String
+  medium: String
+  medium_not: String
+  medium_in: [String!]
+  medium_not_in: [String!]
+  medium_lt: String
+  medium_lte: String
+  medium_gt: String
+  medium_gte: String
+  medium_contains: String
+  medium_not_contains: String
+  medium_starts_with: String
+  medium_not_starts_with: String
+  medium_ends_with: String
+  medium_not_ends_with: String
+  small: String
+  small_not: String
+  small_in: [String!]
+  small_not_in: [String!]
+  small_lt: String
+  small_lte: String
+  small_gt: String
+  small_gte: String
+  small_contains: String
+  small_not_contains: String
+  small_starts_with: String
+  small_not_starts_with: String
+  small_ends_with: String
+  small_not_ends_with: String
+  likeable: Likeable
+  likeable_not: Likeable
+  likeable_in: [Likeable!]
+  likeable_not_in: [Likeable!]
   AND: [DisplayWhereInput!]
   OR: [DisplayWhereInput!]
   NOT: [DisplayWhereInput!]
@@ -221,7 +412,19 @@ input DisplayWhereUniqueInput {
   id: ID
 }
 
+enum Likeable {
+  LIKEABLE
+  NOT_LIKEABLE
+}
+
 scalar Long
+
+enum MediaType {
+  SERIE
+  MOVIE
+  MANGA
+  ANIME
+}
 
 type Mutation {
   createDisplay(data: DisplayCreateInput!): Display!
@@ -230,6 +433,12 @@ type Mutation {
   upsertDisplay(where: DisplayWhereUniqueInput!, create: DisplayCreateInput!, update: DisplayUpdateInput!): Display!
   deleteDisplay(where: DisplayWhereUniqueInput!): Display
   deleteManyDisplays(where: DisplayWhereInput): BatchPayload!
+  createProgress(data: ProgressCreateInput!): Progress!
+  updateProgress(data: ProgressUpdateInput!, where: ProgressWhereUniqueInput!): Progress
+  updateManyProgresses(data: ProgressUpdateManyMutationInput!, where: ProgressWhereInput): BatchPayload!
+  upsertProgress(where: ProgressWhereUniqueInput!, create: ProgressCreateInput!, update: ProgressUpdateInput!): Progress!
+  deleteProgress(where: ProgressWhereUniqueInput!): Progress
+  deleteManyProgresses(where: ProgressWhereInput): BatchPayload!
   createSeason(data: SeasonCreateInput!): Season!
   updateSeason(data: SeasonUpdateInput!, where: SeasonWhereUniqueInput!): Season
   updateManySeasons(data: SeasonUpdateManyMutationInput!, where: SeasonWhereInput): BatchPayload!
@@ -273,10 +482,227 @@ type PageInfo {
   endCursor: String
 }
 
+type Progress {
+  id: ID!
+  avancement: Float!
+  video: Video!
+  user: User!
+}
+
+type ProgressConnection {
+  pageInfo: PageInfo!
+  edges: [ProgressEdge]!
+  aggregate: AggregateProgress!
+}
+
+input ProgressCreateInput {
+  id: ID
+  avancement: Float!
+  video: VideoCreateOneWithoutProgressInput!
+  user: UserCreateOneWithoutProgressesInput!
+}
+
+input ProgressCreateManyWithoutUserInput {
+  create: [ProgressCreateWithoutUserInput!]
+  connect: [ProgressWhereUniqueInput!]
+}
+
+input ProgressCreateManyWithoutVideoInput {
+  create: [ProgressCreateWithoutVideoInput!]
+  connect: [ProgressWhereUniqueInput!]
+}
+
+input ProgressCreateWithoutUserInput {
+  id: ID
+  avancement: Float!
+  video: VideoCreateOneWithoutProgressInput!
+}
+
+input ProgressCreateWithoutVideoInput {
+  id: ID
+  avancement: Float!
+  user: UserCreateOneWithoutProgressesInput!
+}
+
+type ProgressEdge {
+  node: Progress!
+  cursor: String!
+}
+
+enum ProgressOrderByInput {
+  id_ASC
+  id_DESC
+  avancement_ASC
+  avancement_DESC
+}
+
+type ProgressPreviousValues {
+  id: ID!
+  avancement: Float!
+}
+
+input ProgressScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  avancement: Float
+  avancement_not: Float
+  avancement_in: [Float!]
+  avancement_not_in: [Float!]
+  avancement_lt: Float
+  avancement_lte: Float
+  avancement_gt: Float
+  avancement_gte: Float
+  AND: [ProgressScalarWhereInput!]
+  OR: [ProgressScalarWhereInput!]
+  NOT: [ProgressScalarWhereInput!]
+}
+
+type ProgressSubscriptionPayload {
+  mutation: MutationType!
+  node: Progress
+  updatedFields: [String!]
+  previousValues: ProgressPreviousValues
+}
+
+input ProgressSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ProgressWhereInput
+  AND: [ProgressSubscriptionWhereInput!]
+  OR: [ProgressSubscriptionWhereInput!]
+  NOT: [ProgressSubscriptionWhereInput!]
+}
+
+input ProgressUpdateInput {
+  avancement: Float
+  video: VideoUpdateOneRequiredWithoutProgressInput
+  user: UserUpdateOneRequiredWithoutProgressesInput
+}
+
+input ProgressUpdateManyDataInput {
+  avancement: Float
+}
+
+input ProgressUpdateManyMutationInput {
+  avancement: Float
+}
+
+input ProgressUpdateManyWithoutUserInput {
+  create: [ProgressCreateWithoutUserInput!]
+  delete: [ProgressWhereUniqueInput!]
+  connect: [ProgressWhereUniqueInput!]
+  set: [ProgressWhereUniqueInput!]
+  disconnect: [ProgressWhereUniqueInput!]
+  update: [ProgressUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ProgressUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ProgressScalarWhereInput!]
+  updateMany: [ProgressUpdateManyWithWhereNestedInput!]
+}
+
+input ProgressUpdateManyWithoutVideoInput {
+  create: [ProgressCreateWithoutVideoInput!]
+  delete: [ProgressWhereUniqueInput!]
+  connect: [ProgressWhereUniqueInput!]
+  set: [ProgressWhereUniqueInput!]
+  disconnect: [ProgressWhereUniqueInput!]
+  update: [ProgressUpdateWithWhereUniqueWithoutVideoInput!]
+  upsert: [ProgressUpsertWithWhereUniqueWithoutVideoInput!]
+  deleteMany: [ProgressScalarWhereInput!]
+  updateMany: [ProgressUpdateManyWithWhereNestedInput!]
+}
+
+input ProgressUpdateManyWithWhereNestedInput {
+  where: ProgressScalarWhereInput!
+  data: ProgressUpdateManyDataInput!
+}
+
+input ProgressUpdateWithoutUserDataInput {
+  avancement: Float
+  video: VideoUpdateOneRequiredWithoutProgressInput
+}
+
+input ProgressUpdateWithoutVideoDataInput {
+  avancement: Float
+  user: UserUpdateOneRequiredWithoutProgressesInput
+}
+
+input ProgressUpdateWithWhereUniqueWithoutUserInput {
+  where: ProgressWhereUniqueInput!
+  data: ProgressUpdateWithoutUserDataInput!
+}
+
+input ProgressUpdateWithWhereUniqueWithoutVideoInput {
+  where: ProgressWhereUniqueInput!
+  data: ProgressUpdateWithoutVideoDataInput!
+}
+
+input ProgressUpsertWithWhereUniqueWithoutUserInput {
+  where: ProgressWhereUniqueInput!
+  update: ProgressUpdateWithoutUserDataInput!
+  create: ProgressCreateWithoutUserInput!
+}
+
+input ProgressUpsertWithWhereUniqueWithoutVideoInput {
+  where: ProgressWhereUniqueInput!
+  update: ProgressUpdateWithoutVideoDataInput!
+  create: ProgressCreateWithoutVideoInput!
+}
+
+input ProgressWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  avancement: Float
+  avancement_not: Float
+  avancement_in: [Float!]
+  avancement_not_in: [Float!]
+  avancement_lt: Float
+  avancement_lte: Float
+  avancement_gt: Float
+  avancement_gte: Float
+  video: VideoWhereInput
+  user: UserWhereInput
+  AND: [ProgressWhereInput!]
+  OR: [ProgressWhereInput!]
+  NOT: [ProgressWhereInput!]
+}
+
+input ProgressWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   display(where: DisplayWhereUniqueInput!): Display
   displays(where: DisplayWhereInput, orderBy: DisplayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Display]!
   displaysConnection(where: DisplayWhereInput, orderBy: DisplayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DisplayConnection!
+  progress(where: ProgressWhereUniqueInput!): Progress
+  progresses(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progress]!
+  progressesConnection(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProgressConnection!
   season(where: SeasonWhereUniqueInput!): Season
   seasons(where: SeasonWhereInput, orderBy: SeasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Season]!
   seasonsConnection(where: SeasonWhereInput, orderBy: SeasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SeasonConnection!
@@ -504,6 +930,7 @@ type Serie {
   name: String!
   display: Display
   seasons(where: SeasonWhereInput, orderBy: SeasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Season!]
+  color: String
 }
 
 type SerieConnection {
@@ -517,6 +944,7 @@ input SerieCreateInput {
   name: String!
   display: DisplayCreateOneInput
   seasons: SeasonCreateManyInput
+  color: String
 }
 
 type SerieEdge {
@@ -529,11 +957,14 @@ enum SerieOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  color_ASC
+  color_DESC
 }
 
 type SeriePreviousValues {
   id: ID!
   name: String!
+  color: String
 }
 
 type SerieSubscriptionPayload {
@@ -558,10 +989,12 @@ input SerieUpdateInput {
   name: String
   display: DisplayUpdateOneInput
   seasons: SeasonUpdateManyInput
+  color: String
 }
 
 input SerieUpdateManyMutationInput {
   name: String
+  color: String
 }
 
 input SerieWhereInput {
@@ -597,6 +1030,20 @@ input SerieWhereInput {
   seasons_every: SeasonWhereInput
   seasons_some: SeasonWhereInput
   seasons_none: SeasonWhereInput
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
   AND: [SerieWhereInput!]
   OR: [SerieWhereInput!]
   NOT: [SerieWhereInput!]
@@ -606,8 +1053,15 @@ input SerieWhereUniqueInput {
   id: ID
 }
 
+enum Sexe {
+  MALE
+  FEMALE
+  OTHER
+}
+
 type Subscription {
   display(where: DisplaySubscriptionWhereInput): DisplaySubscriptionPayload
+  progress(where: ProgressSubscriptionWhereInput): ProgressSubscriptionPayload
   season(where: SeasonSubscriptionWhereInput): SeasonSubscriptionPayload
   serie(where: SerieSubscriptionWhereInput): SerieSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -618,10 +1072,16 @@ type User {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  username: String
+  username: String!
+  email: String
   password: String
   firstname: String
   lastname: String
+  birthday: DateTime
+  preferences(where: DisplayWhereInput, orderBy: DisplayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Display!]
+  description: String
+  sexe: Sexe
+  progresses(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progress!]
 }
 
 type UserConnection {
@@ -632,10 +1092,34 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  username: String
+  username: String!
+  email: String
   password: String
   firstname: String
   lastname: String
+  birthday: DateTime
+  preferences: DisplayCreateManyInput
+  description: String
+  sexe: Sexe
+  progresses: ProgressCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutProgressesInput {
+  create: UserCreateWithoutProgressesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutProgressesInput {
+  id: ID
+  username: String!
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  birthday: DateTime
+  preferences: DisplayCreateManyInput
+  description: String
+  sexe: Sexe
 }
 
 type UserEdge {
@@ -652,22 +1136,34 @@ enum UserOrderByInput {
   updatedAt_DESC
   username_ASC
   username_DESC
+  email_ASC
+  email_DESC
   password_ASC
   password_DESC
   firstname_ASC
   firstname_DESC
   lastname_ASC
   lastname_DESC
+  birthday_ASC
+  birthday_DESC
+  description_ASC
+  description_DESC
+  sexe_ASC
+  sexe_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  username: String
+  username: String!
+  email: String
   password: String
   firstname: String
   lastname: String
+  birthday: DateTime
+  description: String
+  sexe: Sexe
 }
 
 type UserSubscriptionPayload {
@@ -690,16 +1186,50 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   username: String
+  email: String
   password: String
   firstname: String
   lastname: String
+  birthday: DateTime
+  preferences: DisplayUpdateManyInput
+  description: String
+  sexe: Sexe
+  progresses: ProgressUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   username: String
+  email: String
   password: String
   firstname: String
   lastname: String
+  birthday: DateTime
+  description: String
+  sexe: Sexe
+}
+
+input UserUpdateOneRequiredWithoutProgressesInput {
+  create: UserCreateWithoutProgressesInput
+  update: UserUpdateWithoutProgressesDataInput
+  upsert: UserUpsertWithoutProgressesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutProgressesDataInput {
+  username: String
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  birthday: DateTime
+  preferences: DisplayUpdateManyInput
+  description: String
+  sexe: Sexe
+}
+
+input UserUpsertWithoutProgressesInput {
+  update: UserUpdateWithoutProgressesDataInput!
+  create: UserCreateWithoutProgressesInput!
 }
 
 input UserWhereInput {
@@ -747,6 +1277,20 @@ input UserWhereInput {
   username_not_starts_with: String
   username_ends_with: String
   username_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
   password: String
   password_not: String
   password_in: [String!]
@@ -789,6 +1333,38 @@ input UserWhereInput {
   lastname_not_starts_with: String
   lastname_ends_with: String
   lastname_not_ends_with: String
+  birthday: DateTime
+  birthday_not: DateTime
+  birthday_in: [DateTime!]
+  birthday_not_in: [DateTime!]
+  birthday_lt: DateTime
+  birthday_lte: DateTime
+  birthday_gt: DateTime
+  birthday_gte: DateTime
+  preferences_every: DisplayWhereInput
+  preferences_some: DisplayWhereInput
+  preferences_none: DisplayWhereInput
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  sexe: Sexe
+  sexe_not: Sexe
+  sexe_in: [Sexe!]
+  sexe_not_in: [Sexe!]
+  progresses_every: ProgressWhereInput
+  progresses_some: ProgressWhereInput
+  progresses_none: ProgressWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -797,6 +1373,7 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   username: String
+  email: String
 }
 
 type Video {
@@ -805,6 +1382,7 @@ type Video {
   url: String!
   display: Display!
   season: Season
+  progress(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progress!]
 }
 
 type VideoConnection {
@@ -819,6 +1397,7 @@ input VideoCreateInput {
   url: String!
   display: DisplayCreateOneInput!
   season: SeasonCreateOneWithoutEpisodesInput
+  progress: ProgressCreateManyWithoutVideoInput
 }
 
 input VideoCreateManyWithoutSeasonInput {
@@ -826,11 +1405,25 @@ input VideoCreateManyWithoutSeasonInput {
   connect: [VideoWhereUniqueInput!]
 }
 
+input VideoCreateOneWithoutProgressInput {
+  create: VideoCreateWithoutProgressInput
+  connect: VideoWhereUniqueInput
+}
+
+input VideoCreateWithoutProgressInput {
+  id: ID
+  name: String!
+  url: String!
+  display: DisplayCreateOneInput!
+  season: SeasonCreateOneWithoutEpisodesInput
+}
+
 input VideoCreateWithoutSeasonInput {
   id: ID
   name: String!
   url: String!
   display: DisplayCreateOneInput!
+  progress: ProgressCreateManyWithoutVideoInput
 }
 
 type VideoEdge {
@@ -924,6 +1517,7 @@ input VideoUpdateInput {
   url: String
   display: DisplayUpdateOneRequiredInput
   season: SeasonUpdateOneWithoutEpisodesInput
+  progress: ProgressUpdateManyWithoutVideoInput
 }
 
 input VideoUpdateManyDataInput {
@@ -953,15 +1547,35 @@ input VideoUpdateManyWithWhereNestedInput {
   data: VideoUpdateManyDataInput!
 }
 
+input VideoUpdateOneRequiredWithoutProgressInput {
+  create: VideoCreateWithoutProgressInput
+  update: VideoUpdateWithoutProgressDataInput
+  upsert: VideoUpsertWithoutProgressInput
+  connect: VideoWhereUniqueInput
+}
+
+input VideoUpdateWithoutProgressDataInput {
+  name: String
+  url: String
+  display: DisplayUpdateOneRequiredInput
+  season: SeasonUpdateOneWithoutEpisodesInput
+}
+
 input VideoUpdateWithoutSeasonDataInput {
   name: String
   url: String
   display: DisplayUpdateOneRequiredInput
+  progress: ProgressUpdateManyWithoutVideoInput
 }
 
 input VideoUpdateWithWhereUniqueWithoutSeasonInput {
   where: VideoWhereUniqueInput!
   data: VideoUpdateWithoutSeasonDataInput!
+}
+
+input VideoUpsertWithoutProgressInput {
+  update: VideoUpdateWithoutProgressDataInput!
+  create: VideoCreateWithoutProgressInput!
 }
 
 input VideoUpsertWithWhereUniqueWithoutSeasonInput {
@@ -1015,6 +1629,9 @@ input VideoWhereInput {
   url_not_ends_with: String
   display: DisplayWhereInput
   season: SeasonWhereInput
+  progress_every: ProgressWhereInput
+  progress_some: ProgressWhereInput
+  progress_none: ProgressWhereInput
   AND: [VideoWhereInput!]
   OR: [VideoWhereInput!]
   NOT: [VideoWhereInput!]
