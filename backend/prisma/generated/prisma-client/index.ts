@@ -301,6 +301,8 @@ export type SerieOrderByInput =
   | "id_DESC"
   | "name_ASC"
   | "name_DESC"
+  | "description_ASC"
+  | "description_DESC"
   | "color_ASC"
   | "color_DESC";
 
@@ -324,7 +326,9 @@ export type SeasonOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
-  | "name_DESC";
+  | "name_DESC"
+  | "description_ASC"
+  | "description_DESC";
 
 export type DisplayOrderByInput =
   | "id_ASC"
@@ -426,6 +430,7 @@ export interface VideoSubscriptionWhereInput {
 export interface SeasonCreateWithoutEpisodesInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface SerieSubscriptionWhereInput {
@@ -673,6 +678,7 @@ export interface ProgressCreateManyWithoutUserInput {
 
 export interface SeasonUpdateWithoutEpisodesDataInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface DisplayWhereInput {
@@ -776,6 +782,7 @@ export interface DisplayWhereInput {
 export interface SerieCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+  description?: Maybe<String>;
   display?: Maybe<DisplayCreateOneInput>;
   seasons?: Maybe<SeasonCreateManyInput>;
   color?: Maybe<String>;
@@ -783,6 +790,7 @@ export interface SerieCreateInput {
 
 export interface SerieUpdateManyMutationInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
   color?: Maybe<String>;
 }
 
@@ -833,6 +841,20 @@ export interface SeasonScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   AND?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
   OR?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
   NOT?: Maybe<SeasonScalarWhereInput[] | SeasonScalarWhereInput>;
@@ -852,6 +874,7 @@ export interface UserUpdateWithoutProgressesDataInput {
 
 export interface SeasonUpdateDataInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
   episodes?: Maybe<VideoUpdateManyWithoutSeasonInput>;
 }
 
@@ -897,6 +920,7 @@ export interface DisplayUpdateOneInput {
 
 export interface SeasonUpdateManyMutationInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface DisplayCreateInput {
@@ -1092,6 +1116,20 @@ export interface SeasonWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   episodes_every?: Maybe<VideoWhereInput>;
   episodes_some?: Maybe<VideoWhereInput>;
   episodes_none?: Maybe<VideoWhereInput>;
@@ -1103,6 +1141,7 @@ export interface SeasonWhereInput {
 export interface SeasonCreateInput {
   id?: Maybe<ID_Input>;
   name?: Maybe<String>;
+  description?: Maybe<String>;
   episodes?: Maybe<VideoCreateManyWithoutSeasonInput>;
 }
 
@@ -1181,6 +1220,7 @@ export interface UserCreateInput {
 
 export interface SeasonUpdateInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
   episodes?: Maybe<VideoUpdateManyWithoutSeasonInput>;
 }
 
@@ -1222,6 +1262,7 @@ export interface VideoUpdateWithWhereUniqueWithoutSeasonInput {
 
 export interface SerieUpdateInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
   display?: Maybe<DisplayUpdateOneInput>;
   seasons?: Maybe<SeasonUpdateManyInput>;
   color?: Maybe<String>;
@@ -1443,6 +1484,20 @@ export interface SerieWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   display?: Maybe<DisplayWhereInput>;
   seasons_every?: Maybe<SeasonWhereInput>;
   seasons_some?: Maybe<SeasonWhereInput>;
@@ -1633,6 +1688,7 @@ export interface SeasonUpdateManyInput {
 
 export interface SeasonUpdateManyDataInput {
   name?: Maybe<String>;
+  description?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
@@ -1930,6 +1986,7 @@ export interface UserPreviousValuesSubscription
 export interface SeriePreviousValues {
   id: ID_Output;
   name: String;
+  description?: String;
   color?: String;
 }
 
@@ -1938,6 +1995,7 @@ export interface SeriePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
   color: () => Promise<String>;
 }
 
@@ -1946,6 +2004,7 @@ export interface SeriePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   color: () => Promise<AsyncIterator<String>>;
 }
 
@@ -2358,11 +2417,13 @@ export interface VideoSubscriptionPayloadSubscription
 export interface Season {
   id: ID_Output;
   name?: String;
+  description?: String;
 }
 
 export interface SeasonPromise extends Promise<Season>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
   episodes: <T = FragmentableArray<Video>>(args?: {
     where?: VideoWhereInput;
     orderBy?: VideoOrderByInput;
@@ -2379,6 +2440,7 @@ export interface SeasonSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   episodes: <T = Promise<AsyncIterator<VideoSubscription>>>(args?: {
     where?: VideoWhereInput;
     orderBy?: VideoOrderByInput;
@@ -2395,6 +2457,7 @@ export interface SeasonNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
   episodes: <T = FragmentableArray<Video>>(args?: {
     where?: VideoWhereInput;
     orderBy?: VideoOrderByInput;
@@ -2409,12 +2472,14 @@ export interface SeasonNullablePromise
 export interface Serie {
   id: ID_Output;
   name: String;
+  description?: String;
   color?: String;
 }
 
 export interface SeriePromise extends Promise<Serie>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
   display: <T = DisplayPromise>() => T;
   seasons: <T = FragmentableArray<Season>>(args?: {
     where?: SeasonWhereInput;
@@ -2433,6 +2498,7 @@ export interface SerieSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   display: <T = DisplaySubscription>() => T;
   seasons: <T = Promise<AsyncIterator<SeasonSubscription>>>(args?: {
     where?: SeasonWhereInput;
@@ -2451,6 +2517,7 @@ export interface SerieNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
   display: <T = DisplayPromise>() => T;
   seasons: <T = FragmentableArray<Season>>(args?: {
     where?: SeasonWhereInput;
@@ -2583,6 +2650,7 @@ export interface VideoNullablePromise
 export interface SeasonPreviousValues {
   id: ID_Output;
   name?: String;
+  description?: String;
 }
 
 export interface SeasonPreviousValuesPromise
@@ -2590,6 +2658,7 @@ export interface SeasonPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  description: () => Promise<String>;
 }
 
 export interface SeasonPreviousValuesSubscription
@@ -2597,6 +2666,7 @@ export interface SeasonPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SeasonSubscriptionPayload {

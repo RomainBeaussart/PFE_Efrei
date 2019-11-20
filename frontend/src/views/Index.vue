@@ -22,7 +22,7 @@
                 >Logout</v-btn> -->
             </v-toolbar>
         </v-app-bar>
-        <router-view style="width: 100%; margin: 0; max-width: 100%; padding: 0 0 !important;"></router-view>
+        <router-view style="max-width: 100%; padding: 0 0 !important; height: 100%"></router-view>
     </v-container>
 </template>
 <script lang="ts">

@@ -56,6 +56,7 @@ type Display {
 type Serie {
     id: ID! @id
     name: String!
+    description: String
     display: Display @relation(name: "SerieDisplay" link: INLINE)
     seasons: [Season!]! @relation(name: "SerieSeasons")
     color: String
@@ -64,6 +65,7 @@ type Serie {
 type Season {
     id: ID! @id
     name: String
+    description: String
     episodes: [Video!]! @relation(name: "SeasonVideo")
 }
 
