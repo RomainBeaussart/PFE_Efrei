@@ -11,6 +11,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Signup from './views/Signup.vue'
 import Serie from './views/Serie.vue'
+import Series from './views/Series.vue'
 import User from './views/User.vue'
 import Manga from './views/Manga.vue'
 
@@ -29,7 +30,8 @@ const router = new Router({
                 { path: '/', name: 'home', component: Home },
                 { path: '/login', name: 'login', component: Login },
                 { path: '/signup', name: 'signup', component: Signup },
-                { path: '/series/:id', name: 'series', component: Serie },
+                { path: '/series/:id', name: 'serie', component: Serie },
+                { path: '/series', name: 'series', component: Series },
                 { path: '/user', name: 'user', component: User },
                 { path: '/manga', name: 'manga', component: Manga }
             ]

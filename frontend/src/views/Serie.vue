@@ -1,11 +1,18 @@
 <template>
-    <container v-if="serie">
+    <v-container v-if="serie">
         <v-layout :style="background">
             <v-layout row style="margin:20vh 0 0 0" xs12>
-                <v-flex style="color: white; text-align: center;" class="align-center font-weight-black display-4">
+                <v-flex
+                    style="color: white; text-align: center; text-shadow: 0px 0px 10px #4F4F4F;"
+                    class="align-center font-weight-black display-4"
+                >
                     {{ serie.name }}
                 </v-flex>
-                <v-flex xs12 v-for="season in serie.seasons" v-bind:key="season.id">
+                <v-flex
+                    xs12
+                    v-for="season in serie.seasons"
+                    v-bind:key="season.id"
+                >
                     <hooper :itemsToShow="4.5">
                         <slide v-for="episode in season.episodes" v-bind:key="episode.id">
                             <v-card
@@ -51,7 +58,7 @@
                 </v-flex>
             </v-layout>
         </v-layout>
-    </container>
+    </v-container>
 </template>
 
 <script lang="ts">

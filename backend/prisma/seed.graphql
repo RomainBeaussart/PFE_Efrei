@@ -320,4 +320,226 @@ serie2: createSerie(data: {
     }
 }) { id }
 
+serie3: createSerie(data: {
+    name: "Black Mirror"
+    color: "c4ebee"
+    display: {
+        create: {
+            big: "https://stmed.net/sites/default/files/black-mirror-wallpapers-31524-7724306.jpg"
+            medium: "https://wallpapercave.com/wp/wp2096849.jpg"
+        }
+    }
+    seasons: {
+        create: [
+            {
+            name: "Season 1"
+            episodes: {
+                create: [
+                    {
+                        name: "Chapiter 1"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.ladn.eu/wp-content/uploads/2019/06/inventions-black-mirror.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 2"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://azapmedias.be/wp-content/uploads/2018/10/maxsdffwresdefault.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 3"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.ladn.eu/wp-content/uploads/2019/06/inventions-black-mirror.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 4"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://azapmedias.be/wp-content/uploads/2018/10/maxsdffwresdefault.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 5"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.ladn.eu/wp-content/uploads/2019/06/inventions-black-mirror.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 6"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://azapmedias.be/wp-content/uploads/2018/10/maxsdffwresdefault.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 7"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.ladn.eu/wp-content/uploads/2019/06/inventions-black-mirror.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 8"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://azapmedias.be/wp-content/uploads/2018/10/maxsdffwresdefault.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 9"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.ladn.eu/wp-content/uploads/2019/06/inventions-black-mirror.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 10"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://azapmedias.be/wp-content/uploads/2018/10/maxsdffwresdefault.jpg"
+                            }
+                        }
+                    }
+                ]
+            }
+        }]
+    }
+}) { id }
+
+serie4: createSerie(data: {
+    name: "Casa de Papel"
+    color: "c4ebee"
+    display: {
+        create: {
+            big: "http://www.premiere.fr/sites/default/files/styles/scale_crop_1280x720/public/2019-06/qfqf.jpg"
+            medium: "https://www.presse-citron.net/wordpress_prod/wp-content/uploads/2019/08/casa-de-papel-partie-4-tournage-termine.jpg"
+        }
+    }
+    seasons: {
+        create: [
+            {
+            name: "Season 1"
+            episodes: {
+                create: [
+                    {
+                        name: "Chapiter 1"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://img.bfmtv.com/c/1256/708/553/15d095b6986c48626b2a03cbeee86.jpeg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 2"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://parismatch.be/app/uploads/2018/04/la-casa-de-papel-3488_5a82e01dc46b2-e1524044942303-1100x715.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 3"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://img.bfmtv.com/c/1256/708/553/15d095b6986c48626b2a03cbeee86.jpeg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 4"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://parismatch.be/app/uploads/2018/04/la-casa-de-papel-3488_5a82e01dc46b2-e1524044942303-1100x715.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 5"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://img.bfmtv.com/c/1256/708/553/15d095b6986c48626b2a03cbeee86.jpeg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 6"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://parismatch.be/app/uploads/2018/04/la-casa-de-papel-3488_5a82e01dc46b2-e1524044942303-1100x715.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 7"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://img.bfmtv.com/c/1256/708/553/15d095b6986c48626b2a03cbeee86.jpeg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 8"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://parismatch.be/app/uploads/2018/04/la-casa-de-papel-3488_5a82e01dc46b2-e1524044942303-1100x715.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 9"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://img.bfmtv.com/c/1256/708/553/15d095b6986c48626b2a03cbeee86.jpeg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 10"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://parismatch.be/app/uploads/2018/04/la-casa-de-papel-3488_5a82e01dc46b2-e1524044942303-1100x715.jpg"
+                            }
+                        }
+                    }
+                ]
+            }
+        }]
+    }
+}) { id }
+
 }

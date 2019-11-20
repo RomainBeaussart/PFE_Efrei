@@ -721,6 +721,7 @@ type Query {
 type Season {
   id: ID!
   name: String
+  description: String
   episodes(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
 }
 
@@ -733,6 +734,7 @@ type SeasonConnection {
 input SeasonCreateInput {
   id: ID
   name: String
+  description: String
   episodes: VideoCreateManyWithoutSeasonInput
 }
 
@@ -749,6 +751,7 @@ input SeasonCreateOneWithoutEpisodesInput {
 input SeasonCreateWithoutEpisodesInput {
   id: ID
   name: String
+  description: String
 }
 
 type SeasonEdge {
@@ -761,11 +764,14 @@ enum SeasonOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  description_ASC
+  description_DESC
 }
 
 type SeasonPreviousValues {
   id: ID!
   name: String
+  description: String
 }
 
 input SeasonScalarWhereInput {
@@ -797,6 +803,20 @@ input SeasonScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   AND: [SeasonScalarWhereInput!]
   OR: [SeasonScalarWhereInput!]
   NOT: [SeasonScalarWhereInput!]
@@ -822,16 +842,19 @@ input SeasonSubscriptionWhereInput {
 
 input SeasonUpdateDataInput {
   name: String
+  description: String
   episodes: VideoUpdateManyWithoutSeasonInput
 }
 
 input SeasonUpdateInput {
   name: String
+  description: String
   episodes: VideoUpdateManyWithoutSeasonInput
 }
 
 input SeasonUpdateManyDataInput {
   name: String
+  description: String
 }
 
 input SeasonUpdateManyInput {
@@ -848,6 +871,7 @@ input SeasonUpdateManyInput {
 
 input SeasonUpdateManyMutationInput {
   name: String
+  description: String
 }
 
 input SeasonUpdateManyWithWhereNestedInput {
@@ -866,6 +890,7 @@ input SeasonUpdateOneWithoutEpisodesInput {
 
 input SeasonUpdateWithoutEpisodesDataInput {
   name: String
+  description: String
 }
 
 input SeasonUpdateWithWhereUniqueNestedInput {
@@ -913,6 +938,20 @@ input SeasonWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   episodes_every: VideoWhereInput
   episodes_some: VideoWhereInput
   episodes_none: VideoWhereInput
@@ -928,6 +967,7 @@ input SeasonWhereUniqueInput {
 type Serie {
   id: ID!
   name: String!
+  description: String
   display: Display
   seasons(where: SeasonWhereInput, orderBy: SeasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Season!]
   color: String
@@ -942,6 +982,7 @@ type SerieConnection {
 input SerieCreateInput {
   id: ID
   name: String!
+  description: String
   display: DisplayCreateOneInput
   seasons: SeasonCreateManyInput
   color: String
@@ -957,6 +998,8 @@ enum SerieOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  description_ASC
+  description_DESC
   color_ASC
   color_DESC
 }
@@ -964,6 +1007,7 @@ enum SerieOrderByInput {
 type SeriePreviousValues {
   id: ID!
   name: String!
+  description: String
   color: String
 }
 
@@ -987,6 +1031,7 @@ input SerieSubscriptionWhereInput {
 
 input SerieUpdateInput {
   name: String
+  description: String
   display: DisplayUpdateOneInput
   seasons: SeasonUpdateManyInput
   color: String
@@ -994,6 +1039,7 @@ input SerieUpdateInput {
 
 input SerieUpdateManyMutationInput {
   name: String
+  description: String
   color: String
 }
 
@@ -1026,6 +1072,20 @@ input SerieWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   display: DisplayWhereInput
   seasons_every: SeasonWhereInput
   seasons_some: SeasonWhereInput

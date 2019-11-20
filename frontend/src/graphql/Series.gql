@@ -1,0 +1,11 @@
+query Series{
+    series {
+        id
+        name
+        description
+        display {
+            big
+            medium
+        }
+    }
+}
