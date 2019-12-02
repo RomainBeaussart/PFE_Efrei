@@ -1,14 +1,18 @@
 <template>
-    <v-container>
+    <v-container fluid class="d-flex justify-center fill-height">
         <v-card
             elevation="0"
             width="60%"
+            class="align-self-center"
         >
-            <v-layout xs6 pa-5>
-                <v-flex xs12>
+            <v-layout xs6  wrap pa-5>
+                <v-flex xs12 class="d-flex justify-center">
                     <p class="display-2">
                         Na Mo Naki
                     </p>
+                    <img src="../assets/img/logo_dark.gif" height="60vw"/>
+                </v-flex>
+                <v-flex xs12>
                     <v-text-field
                         v-model="username"
                         label="Login"

@@ -1,30 +1,27 @@
 <template>
-    <v-container raw fluid xs12 style="margin: 0; padding: 0; height: 100%">
-        <v-app-bar fixed app class="elevation-0" style="background: rgba(0,0,0,0)" v-if="currentUser" pa-0 ma-0>
-            <v-toolbar dense class="elevation-0 fill-width" style="background: rgba(0,0,0,0)" fixed>
-                <v-btn
-                    style="margin-top: 5vh"
-                    fab
-                    elevation="0"
-                    color="white"
-                >
-                    <v-icon >apps</v-icon>
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-toolbar-title class="headline text-uppercase white--text">
-                    <img src="../assets/img/logo.svg" height="30px" />
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <!-- <v-btn
-                    text
-                    @click="logout()"
-                    class="white--text"
-                >Logout</v-btn> -->
+    <v-app>
+        <v-app-bar app class="elevation-0" color="primary" v-if="currentUser">
+            <v-toolbar color="primary" fixed elevation="0">
+                <v-layout wrap>
+                    <v-flex xs4>
+                    </v-flex>
+                    <v-flex xs4 class="d-flex justify-center align-center white--text title">
+                        Na mo naki
+                        <img src="../assets/img/logo_light.gif" width="70vw"/>
+                    </v-flex>
+                    <v-flex xs4>
+                    </v-flex>
+                </v-layout>
             </v-toolbar>
         </v-app-bar>
-        <router-view style="max-width: 100%; padding: 0 0 !important; height: 100%"></router-view>
-    </v-container>
+        <v-content>
+            <v-scroll-x-transition>
+                <router-view></router-view>
+            </v-scroll-x-transition>
+        </v-content>
+    </v-app>
 </template>
+
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 

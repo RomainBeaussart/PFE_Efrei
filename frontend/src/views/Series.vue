@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="series.length">
+    <v-container fluid v-if="series.length">
         <v-layout :style="background">
             <hooper ref="hooper" style="height: 100%; width: 45%; margin-left: auto" :vertical="true" :settings="hooperSettings" @slide="updateCarousel">
                 <slide v-for="serie in series" v-bind:key="serie.id" style="height: 25vh">

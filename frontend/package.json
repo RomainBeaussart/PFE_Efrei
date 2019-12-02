@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "@types/graphql": "^14.0.7",
     "@types/simple-oauth2": "^2.2.1",
     "@vue/cli-plugin-babel": "^3.11.0",

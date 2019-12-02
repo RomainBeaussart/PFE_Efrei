@@ -11,7 +11,7 @@ import store from './store/store';
 import { createProvider } from './vue-apollo'
 import VideoBg from './components/VideoBackground.vue'
 import VueSelectImage from 'vue-select-image'
-import { Hooper, Slide } from 'hooper';
+import { Hooper, Slide, Navigation } from 'hooper';
 
 //
 // end register
@@ -27,6 +27,7 @@ Vue.component('file-upload', VueUploadComponent)
 Vue.component('video-bg', VideoBg)
 Vue.component('hooper', Hooper)
 Vue.component('slide', Slide)
+Vue.component('hooper-navigation', Navigation)
 
 require('vue-select-image/dist/vue-select-image.css')
 

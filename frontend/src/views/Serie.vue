@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="serie">
+    <v-container fluid v-if="serie">
         <v-layout :style="background">
             <v-layout row style="margin:20vh 0 0 0" xs12>
                 <v-flex

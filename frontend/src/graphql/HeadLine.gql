@@ -1,10 +1,12 @@
 query Videos {
-    videos {
+    videos (first: 5){
         id
         name
         display {
             medium
             trailer
+            small
+            type
         }
     }
 }

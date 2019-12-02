@@ -43,6 +43,7 @@ movie1: createVideo(data: {
         create: {
             medium: "http://fr.web.img4.acsta.net/pictures/19/08/29/09/20/1546400.jpg",
             trailer: "http://fr.vid.web.acsta.net/nmedia/33/19/08/28/18//19585375_hd_013.mp4"
+            type: MOVIE
         }
     }
 }) { id }
@@ -54,6 +55,7 @@ movie2: createVideo(data: {
         create: {
             medium: "http://fr.web.img6.acsta.net/r_1280_720/newsv7/19/09/04/10/22/57384510.jpg",
             trailer: "http://fr.vid.web.acsta.net/nmedia/33/19/07/08/15//19584770_hd_013.mp4"
+            type: MOVIE
         }
     }
 }) { id }
@@ -65,6 +67,7 @@ movie3: createVideo(data: {
         create: {
             medium: "https://img01.mgo-images.com/image/thumbnail/v2/content/MMVAF76018A477C2826A4EC8747C40B7BE27.jpeg"
             trailer: "http://fr.vid.web.acsta.net/nmedia/33/19/04/02/14//19583315_hd_013.mp4"
+            type: MOVIE
         }
     }
 }) { id }
@@ -76,6 +79,7 @@ movie4: createVideo(data: {
         create: {
             medium: "http://fr.web.img3.acsta.net/pictures/15/09/08/15/20/305329.jpg"
             trailer: "http://fr.vid.web.acsta.net/nmedia/33/15/06/08/15/19554255_hd_013.mp4"
+            type: MOVIE
         }
     }
 }) { id }
@@ -87,6 +91,7 @@ movie5: createVideo(data: {
         create: {
             medium: "https://static.films-horreur.com/2015/06/pVc73MJKaXuI7nJ55Z5fMTEKid1.jpg"
             trailer: "http://fr.vid.web.acsta.net/nmedia/33/13/08/12/16/18774671_sd_013.mp4"
+            type: MOVIE
         }
     }
 }) { id }
@@ -103,6 +108,7 @@ serie1: createSerie(data: {
     color: "ff1515"
     display: {
         create: {
+            type: SERIE
             big: "https://images3.alphacoders.com/882/thumb-1920-882548.jpg"
             medium: "https://upload.wikimedia.org/wikipedia/commons/3/38/Stranger_Things_logo.png"
         }
@@ -214,6 +220,7 @@ serie2: createSerie(data: {
     color: "FCC204"
     display: {
         create: {
+            type: SERIE
             big: "https://www.youbioit.com/files/newimages/6958/381/breaking_bad_wallpaper.jpg"
             medium: "https://www.presse-citron.net/wordpress_prod/wp-content/uploads/2019/02/netflix-breaking-bad.jpg"
         }
@@ -325,6 +332,7 @@ serie3: createSerie(data: {
     color: "c4ebee"
     display: {
         create: {
+            type: SERIE
             big: "https://stmed.net/sites/default/files/black-mirror-wallpapers-31524-7724306.jpg"
             medium: "https://wallpapercave.com/wp/wp2096849.jpg"
         }
@@ -436,6 +444,7 @@ serie4: createSerie(data: {
     color: "c4ebee"
     display: {
         create: {
+            type: SERIE
             big: "http://www.premiere.fr/sites/default/files/styles/scale_crop_1280x720/public/2019-06/qfqf.jpg"
             medium: "https://www.presse-citron.net/wordpress_prod/wp-content/uploads/2019/08/casa-de-papel-partie-4-tournage-termine.jpg"
         }
@@ -533,6 +542,118 @@ serie4: createSerie(data: {
                         display: {
                             create: {
                                 medium: "https://parismatch.be/app/uploads/2018/04/la-casa-de-papel-3488_5a82e01dc46b2-e1524044942303-1100x715.jpg"
+                            }
+                        }
+                    }
+                ]
+            }
+        }]
+    }
+}) { id }
+
+serie5: createSerie(data: {
+    name: "Murder"
+    color: "c4ebee"
+    display: {
+        create: {
+            type: SERIE
+            big: "https://www.chillcity.fr/wp-content/uploads/2018/09/citations-murder-how-to-get-away-with-a-murderer.png"
+            medium: "https://remeng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2019/09/27/node_96809/11319962/public/2019/09/27/B9721056333Z.1_20190927170713_000%2BG64EIFAQ6.1-0.jpg"
+        }
+    }
+    seasons: {
+        create: [
+            {
+            name: "Season 1"
+            episodes: {
+                create: [
+                    {
+                        name: "Chapiter 1"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.hypable.com/wp-content/uploads/2014/09/Screen-Shot-2014-05-14-at-2.30.06-PM.png"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 2"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://4.bp.blogspot.com/-NP-DUB4AqNs/VERyAh_KAnI/AAAAAAAABQ8/v9Pd2pJj0GI/s1600/How-To-Get-Away-With-Murder-1x01-6.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 3"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.hypable.com/wp-content/uploads/2014/09/Screen-Shot-2014-05-14-at-2.30.06-PM.png"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 4"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://4.bp.blogspot.com/-NP-DUB4AqNs/VERyAh_KAnI/AAAAAAAABQ8/v9Pd2pJj0GI/s1600/How-To-Get-Away-With-Murder-1x01-6.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 5"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.hypable.com/wp-content/uploads/2014/09/Screen-Shot-2014-05-14-at-2.30.06-PM.png"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 6"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://4.bp.blogspot.com/-NP-DUB4AqNs/VERyAh_KAnI/AAAAAAAABQ8/v9Pd2pJj0GI/s1600/How-To-Get-Away-With-Murder-1x01-6.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 7"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.hypable.com/wp-content/uploads/2014/09/Screen-Shot-2014-05-14-at-2.30.06-PM.png"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 8"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://4.bp.blogspot.com/-NP-DUB4AqNs/VERyAh_KAnI/AAAAAAAABQ8/v9Pd2pJj0GI/s1600/How-To-Get-Away-With-Murder-1x01-6.jpg"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 9"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "https://www.hypable.com/wp-content/uploads/2014/09/Screen-Shot-2014-05-14-at-2.30.06-PM.png"
+                            }
+                        }
+                    },
+                    {
+                        name: "Chapiter 10"
+                        url: ""
+                        display: {
+                            create: {
+                                medium: "http://4.bp.blogspot.com/-NP-DUB4AqNs/VERyAh_KAnI/AAAAAAAABQ8/v9Pd2pJj0GI/s1600/How-To-Get-Away-With-Murder-1x01-6.jpg"
                             }
                         }
                     }
