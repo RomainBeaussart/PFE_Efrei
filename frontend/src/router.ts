@@ -13,7 +13,9 @@ import Signup from './views/Signup.vue'
 import Serie from './views/Serie.vue'
 import Series from './views/Series.vue'
 import User from './views/User.vue'
-import Manga from './views/Manga.vue'
+import MangasList from './views/MangasList.vue'
+import MangasComics from './views/MangaComics.vue'
+import MangaReader from './views/MangaReader.vue'
 
 import USER_DETAILS from './graphql/auth/UserDetails.gql'
 
@@ -33,7 +35,9 @@ const router = new Router({
                 { path: '/series/:id', name: 'serie', component: Serie },
                 { path: '/series', name: 'series', component: Series },
                 { path: '/user', name: 'user', component: User },
-                { path: '/manga', name: 'manga', component: Manga }
+                { path: '/mangas', name: 'mangas', component: MangasList },
+                { path: '/manga-chapters', name: 'mangaChapters', component: MangasComics, props: true },
+                { path: '/manga', name: 'manga', component: MangaReader, props: true },
             ]
         },
     ]
