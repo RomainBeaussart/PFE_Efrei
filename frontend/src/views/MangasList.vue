@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-        <v-layout wrap>
+        <v-layout wrap class="d-flex justify-center">
             <v-flex xs4>
                 <v-text-field
                     v-model="search"
@@ -13,7 +13,7 @@
                 ></v-text-field>
             </v-flex>
         </v-layout>
-        <v-layout wrap>
+        <v-layout wrap v-if="mangas && mangas.length && mangas.length > 0">
             <v-flex xs4
                 v-for="manga in mangas" :key="manga.resultUrl"
             >
@@ -35,6 +35,13 @@
                 </v-card>
             </v-flex>
         </v-layout>
+        <v-layout wrap v-else-if="mangas && mangas.length && mangas.length === 0">
+            <v-flex xs4
+                v-for="manga in mangas" :key="manga.resultUrl"
+            >
+                Aucun Manga n'a été trouvé
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -44,7 +51,7 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator"
 import { search, comics } from '../services/index'
 
 @Component
-export default class Manga extends Vue{
+export default class Manga extends Vue {
     search: string = ""
     mangas: Array<any> = []
 

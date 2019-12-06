@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-        <v-layout wrap class="d-flex justify-center display-2">
+        <v-layout wrap class="d-flex justify-center">
             <v-flex xs8 class="d-flex justify-space-between">
                 <v-btn
                     color="primary"
@@ -8,7 +8,15 @@
                 >
                     <v-icon>arrow_left</v-icon>
                 </v-btn>
-                {{ currentPage + 1 }} / {{ chapter.pageCount }}
+                <v-col cols="1">
+                    <v-text-field
+                        v-model="currentPage"
+                        label="Page"
+                        value="example"
+                        :suffix=" + chapter.pageCount ? '/ ' +chapter.pageCount : '/'"
+                        outlined
+                    ></v-text-field>
+                </v-col>
                 <v-btn
                     color="primary"
                     @click="nextPage()"
@@ -16,10 +24,8 @@
                     <v-icon>arrow_right</v-icon>
                 </v-btn>
             </v-flex>
-            <v-flex xs8 v-if="page.pageImage">
-                <center>
-                    <img :src="page.pageImage.imageSource"/>
-                </center>
+            <v-flex xs8 v-if="page.pageImage" class="d-flex justify-center">
+                <img :src="page.pageImage.imageSource" height="750"/>
             </v-flex>
         </v-layout>
     </v-container>
@@ -44,6 +50,16 @@ export default class Manga extends Vue {
         this.chapter = result.data
         console.log(this.chapter)
         this.getPage(0)
+        document.onkeydown = (e) => {
+            switch (e.keyCode) {
+                case 37:
+                    this.previousPage()
+                    break
+                case 39:
+                    this.nextPage()
+                    break
+            }
+        };
     }
 
     previousPage() {
@@ -64,6 +80,15 @@ export default class Manga extends Vue {
         const result = await page(this.chapter.pages[pageNumber].pageFullUrl)
         this.page = result.data
     }
+
+    @Watch('currentPage')
+    selectPage(){
+        if(this.currentPage && this.currentPage <= this.chapter.pageCount && this.currentPage > 0) {
+            this.getPage(this.currentPage)
+        }
+    }
+    
+
 
 }
 </script>
