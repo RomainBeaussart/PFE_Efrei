@@ -6,6 +6,7 @@ scalar DateTime
 
 type Query {
     loggedInUser: User
+    seasonProgression(data: SeasonProgressionInput!): SeasonProgressionPayload
 }
 
 type Mutation {
@@ -32,4 +33,14 @@ input SignupInput {
 
 type SignupPayload {
     id: ID
+}
+
+input SeasonProgressionInput {
+    type: String!
+    userID: ID!
+    progressURL: String!
+}
+
+type SeasonProgressionPayload {
+    progression: Float!
 }

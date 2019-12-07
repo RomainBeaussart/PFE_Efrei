@@ -30,7 +30,7 @@ type User {
     description: String
     sexe: Sexe
 
-    progresses: [Progress] @relation(name: "ProgressUser")
+    Progressiones: [Progression] @relation(name: "ProgressionUser")
 }
 
 type Video {
@@ -39,7 +39,7 @@ type Video {
     url: String!
     display: Display! @relation(name: "VideoDisplay" link: INLINE)
     season: Season @relation(name: "SeasonVideo")
-    progress: [Progress!] @relation(name: "ProgressVideo")
+    Progression: [Progression!] @relation(name: "ProgressionVideo")
 }
 
 type Display {
@@ -66,13 +66,24 @@ type Season {
     id: ID! @id
     name: String
     description: String
-    episodes: [Video!]! @relation(name: "SeasonVideo")
+    episodes: [Video!] @relation(name: "SeasonVideo")
+    mangas: [Manga!] @relation(name: "SeasonManga")
+    url: String @unique
+    chapterCount: Int
 }
 
-type Progress {
+type Progression {
     id: ID! @id
     avancement: Float!
-    video: Video! @relation(name: "ProgressVideo")
-    user: User! @relation(name: "ProgressUser")
+    video: Video @relation(name: "ProgressionVideo")
+    user: User! @relation(name: "ProgressionUser")
+    manga: Manga @relation(name: "ProgressionManga")
 }
 
+type Manga {
+    id: ID! @id
+    name: String!
+    url: String! @unique
+    season: Season! @relation(name: "SeasonManga")
+    progression: [Progression!] @relation(name: "ProgressionManga")
+}

@@ -36,8 +36,8 @@ const router = new Router({
                 { path: '/series', name: 'series', component: Series },
                 { path: '/user', name: 'user', component: User },
                 { path: '/mangas', name: 'mangas', component: MangasList },
-                { path: '/manga-chapters/:urlComics', name: 'mangaChapters', component: MangasComics, props: true },
-                { path: '/manga', name: 'manga', component: MangaReader, props: true },
+                { path: '/manga-chapters/:mangaName/:urlComics', name: 'mangaChapters', component: MangasComics, props: true },
+                { path: '/manga/:mangaName/:chapterName/:urlChapiter', name: 'manga', component: MangaReader, props: true },
             ]
         },
     ]

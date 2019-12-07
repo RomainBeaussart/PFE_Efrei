@@ -9,10 +9,10 @@
                         Na mo naki
                         <img src="../assets/img/logo_light.gif" width="70vw"/>
                     </v-flex>
-                    <v-flex xs4 class="d-flex justify-end">
+                    <v-flex xs4 class="d-flex justify-end align-center">
                         <v-btn
-                            text
                             color="#FFF"
+                            text
                             @click="$router.push({name:'mangas'})"
                         > Mangas</v-btn>
                     </v-flex>

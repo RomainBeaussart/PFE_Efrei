@@ -16,6 +16,7 @@ import { getUserId } from './helpers/user';
 import { AccessRightDirective } from './helpers/graphQLDirectives'
 
 import user from './resolvers/user'
+import progression from './resolvers/progression'
 
 import { Prisma } from '../prisma/generated/prisma-client'
 
@@ -25,17 +26,24 @@ const forwardedRequests = [
     "Query.video", "Query.videos",
     "Query.display", "Query.displays",
     "Query.series", "Query.serie",
+    "Query.manga", "Query.mangas",
+    "Query.progression", "Query.progressions",
 
     //! Mutations
-    "Mutation.createUser", "Mutation.updateUser", "Mutation.deleteUser"
+    "Mutation.createUser", "Mutation.updateUser", "Mutation.deleteUser",
+    "Mutation.upsertSeason", "Mutation.updateSeason", "Mutation.createSeason",
+    "Mutation.upsertManga",
+    "Mutation.upsertProgression", "Mutation.createProgression", "Mutation.updateProgression"
 ]
 
 const resolvers = {
     Query: {
-        ...user.Query
+        ...user.Query,
+        ...progression.Query
     },
     Mutation: {
-        ...user.Mutation
+        ...user.Mutation,
+        ...progression.Mutation
     },
 
     Subscription: {

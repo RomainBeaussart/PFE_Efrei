@@ -1,0 +1,13 @@
+mutation UpsertMangas ($name: String!, $url: String!, $chapterCount: Int){
+    upsertSeason (
+        where: { url: $url }
+        create: {
+            url: $url
+            name: $name
+            chapterCount: $chapterCount
+        }
+        update: {
+            chapterCount: $chapterCount
+        }
+    ){ id }
+}

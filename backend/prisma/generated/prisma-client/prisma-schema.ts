@@ -6,7 +6,11 @@ export const typeDefs = /* GraphQL */ `type AggregateDisplay {
   count: Int!
 }
 
-type AggregateProgress {
+type AggregateManga {
+  count: Int!
+}
+
+type AggregateProgression {
   count: Int!
 }
 
@@ -419,6 +423,266 @@ enum Likeable {
 
 scalar Long
 
+type Manga {
+  id: ID!
+  name: String!
+  url: String!
+  season: Season!
+  progression(where: ProgressionWhereInput, orderBy: ProgressionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progression!]
+}
+
+type MangaConnection {
+  pageInfo: PageInfo!
+  edges: [MangaEdge]!
+  aggregate: AggregateManga!
+}
+
+input MangaCreateInput {
+  id: ID
+  name: String!
+  url: String!
+  season: SeasonCreateOneWithoutMangasInput!
+  progression: ProgressionCreateManyWithoutMangaInput
+}
+
+input MangaCreateManyWithoutSeasonInput {
+  create: [MangaCreateWithoutSeasonInput!]
+  connect: [MangaWhereUniqueInput!]
+}
+
+input MangaCreateOneWithoutProgressionInput {
+  create: MangaCreateWithoutProgressionInput
+  connect: MangaWhereUniqueInput
+}
+
+input MangaCreateWithoutProgressionInput {
+  id: ID
+  name: String!
+  url: String!
+  season: SeasonCreateOneWithoutMangasInput!
+}
+
+input MangaCreateWithoutSeasonInput {
+  id: ID
+  name: String!
+  url: String!
+  progression: ProgressionCreateManyWithoutMangaInput
+}
+
+type MangaEdge {
+  node: Manga!
+  cursor: String!
+}
+
+enum MangaOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  url_ASC
+  url_DESC
+}
+
+type MangaPreviousValues {
+  id: ID!
+  name: String!
+  url: String!
+}
+
+input MangaScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  AND: [MangaScalarWhereInput!]
+  OR: [MangaScalarWhereInput!]
+  NOT: [MangaScalarWhereInput!]
+}
+
+type MangaSubscriptionPayload {
+  mutation: MutationType!
+  node: Manga
+  updatedFields: [String!]
+  previousValues: MangaPreviousValues
+}
+
+input MangaSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MangaWhereInput
+  AND: [MangaSubscriptionWhereInput!]
+  OR: [MangaSubscriptionWhereInput!]
+  NOT: [MangaSubscriptionWhereInput!]
+}
+
+input MangaUpdateInput {
+  name: String
+  url: String
+  season: SeasonUpdateOneRequiredWithoutMangasInput
+  progression: ProgressionUpdateManyWithoutMangaInput
+}
+
+input MangaUpdateManyDataInput {
+  name: String
+  url: String
+}
+
+input MangaUpdateManyMutationInput {
+  name: String
+  url: String
+}
+
+input MangaUpdateManyWithoutSeasonInput {
+  create: [MangaCreateWithoutSeasonInput!]
+  delete: [MangaWhereUniqueInput!]
+  connect: [MangaWhereUniqueInput!]
+  set: [MangaWhereUniqueInput!]
+  disconnect: [MangaWhereUniqueInput!]
+  update: [MangaUpdateWithWhereUniqueWithoutSeasonInput!]
+  upsert: [MangaUpsertWithWhereUniqueWithoutSeasonInput!]
+  deleteMany: [MangaScalarWhereInput!]
+  updateMany: [MangaUpdateManyWithWhereNestedInput!]
+}
+
+input MangaUpdateManyWithWhereNestedInput {
+  where: MangaScalarWhereInput!
+  data: MangaUpdateManyDataInput!
+}
+
+input MangaUpdateOneWithoutProgressionInput {
+  create: MangaCreateWithoutProgressionInput
+  update: MangaUpdateWithoutProgressionDataInput
+  upsert: MangaUpsertWithoutProgressionInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: MangaWhereUniqueInput
+}
+
+input MangaUpdateWithoutProgressionDataInput {
+  name: String
+  url: String
+  season: SeasonUpdateOneRequiredWithoutMangasInput
+}
+
+input MangaUpdateWithoutSeasonDataInput {
+  name: String
+  url: String
+  progression: ProgressionUpdateManyWithoutMangaInput
+}
+
+input MangaUpdateWithWhereUniqueWithoutSeasonInput {
+  where: MangaWhereUniqueInput!
+  data: MangaUpdateWithoutSeasonDataInput!
+}
+
+input MangaUpsertWithoutProgressionInput {
+  update: MangaUpdateWithoutProgressionDataInput!
+  create: MangaCreateWithoutProgressionInput!
+}
+
+input MangaUpsertWithWhereUniqueWithoutSeasonInput {
+  where: MangaWhereUniqueInput!
+  update: MangaUpdateWithoutSeasonDataInput!
+  create: MangaCreateWithoutSeasonInput!
+}
+
+input MangaWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  season: SeasonWhereInput
+  progression_every: ProgressionWhereInput
+  progression_some: ProgressionWhereInput
+  progression_none: ProgressionWhereInput
+  AND: [MangaWhereInput!]
+  OR: [MangaWhereInput!]
+  NOT: [MangaWhereInput!]
+}
+
+input MangaWhereUniqueInput {
+  id: ID
+  url: String
+}
+
 enum MediaType {
   SERIE
   MOVIE
@@ -433,12 +697,18 @@ type Mutation {
   upsertDisplay(where: DisplayWhereUniqueInput!, create: DisplayCreateInput!, update: DisplayUpdateInput!): Display!
   deleteDisplay(where: DisplayWhereUniqueInput!): Display
   deleteManyDisplays(where: DisplayWhereInput): BatchPayload!
-  createProgress(data: ProgressCreateInput!): Progress!
-  updateProgress(data: ProgressUpdateInput!, where: ProgressWhereUniqueInput!): Progress
-  updateManyProgresses(data: ProgressUpdateManyMutationInput!, where: ProgressWhereInput): BatchPayload!
-  upsertProgress(where: ProgressWhereUniqueInput!, create: ProgressCreateInput!, update: ProgressUpdateInput!): Progress!
-  deleteProgress(where: ProgressWhereUniqueInput!): Progress
-  deleteManyProgresses(where: ProgressWhereInput): BatchPayload!
+  createManga(data: MangaCreateInput!): Manga!
+  updateManga(data: MangaUpdateInput!, where: MangaWhereUniqueInput!): Manga
+  updateManyMangas(data: MangaUpdateManyMutationInput!, where: MangaWhereInput): BatchPayload!
+  upsertManga(where: MangaWhereUniqueInput!, create: MangaCreateInput!, update: MangaUpdateInput!): Manga!
+  deleteManga(where: MangaWhereUniqueInput!): Manga
+  deleteManyMangas(where: MangaWhereInput): BatchPayload!
+  createProgression(data: ProgressionCreateInput!): Progression!
+  updateProgression(data: ProgressionUpdateInput!, where: ProgressionWhereUniqueInput!): Progression
+  updateManyProgressions(data: ProgressionUpdateManyMutationInput!, where: ProgressionWhereInput): BatchPayload!
+  upsertProgression(where: ProgressionWhereUniqueInput!, create: ProgressionCreateInput!, update: ProgressionUpdateInput!): Progression!
+  deleteProgression(where: ProgressionWhereUniqueInput!): Progression
+  deleteManyProgressions(where: ProgressionWhereInput): BatchPayload!
   createSeason(data: SeasonCreateInput!): Season!
   updateSeason(data: SeasonUpdateInput!, where: SeasonWhereUniqueInput!): Season
   updateManySeasons(data: SeasonUpdateManyMutationInput!, where: SeasonWhereInput): BatchPayload!
@@ -482,66 +752,82 @@ type PageInfo {
   endCursor: String
 }
 
-type Progress {
+type Progression {
   id: ID!
   avancement: Float!
-  video: Video!
+  video: Video
   user: User!
+  manga: Manga
 }
 
-type ProgressConnection {
+type ProgressionConnection {
   pageInfo: PageInfo!
-  edges: [ProgressEdge]!
-  aggregate: AggregateProgress!
+  edges: [ProgressionEdge]!
+  aggregate: AggregateProgression!
 }
 
-input ProgressCreateInput {
+input ProgressionCreateInput {
   id: ID
   avancement: Float!
-  video: VideoCreateOneWithoutProgressInput!
-  user: UserCreateOneWithoutProgressesInput!
+  video: VideoCreateOneWithoutProgressionInput
+  user: UserCreateOneWithoutProgressionesInput!
+  manga: MangaCreateOneWithoutProgressionInput
 }
 
-input ProgressCreateManyWithoutUserInput {
-  create: [ProgressCreateWithoutUserInput!]
-  connect: [ProgressWhereUniqueInput!]
+input ProgressionCreateManyWithoutMangaInput {
+  create: [ProgressionCreateWithoutMangaInput!]
+  connect: [ProgressionWhereUniqueInput!]
 }
 
-input ProgressCreateManyWithoutVideoInput {
-  create: [ProgressCreateWithoutVideoInput!]
-  connect: [ProgressWhereUniqueInput!]
+input ProgressionCreateManyWithoutUserInput {
+  create: [ProgressionCreateWithoutUserInput!]
+  connect: [ProgressionWhereUniqueInput!]
 }
 
-input ProgressCreateWithoutUserInput {
+input ProgressionCreateManyWithoutVideoInput {
+  create: [ProgressionCreateWithoutVideoInput!]
+  connect: [ProgressionWhereUniqueInput!]
+}
+
+input ProgressionCreateWithoutMangaInput {
   id: ID
   avancement: Float!
-  video: VideoCreateOneWithoutProgressInput!
+  video: VideoCreateOneWithoutProgressionInput
+  user: UserCreateOneWithoutProgressionesInput!
 }
 
-input ProgressCreateWithoutVideoInput {
+input ProgressionCreateWithoutUserInput {
   id: ID
   avancement: Float!
-  user: UserCreateOneWithoutProgressesInput!
+  video: VideoCreateOneWithoutProgressionInput
+  manga: MangaCreateOneWithoutProgressionInput
 }
 
-type ProgressEdge {
-  node: Progress!
+input ProgressionCreateWithoutVideoInput {
+  id: ID
+  avancement: Float!
+  user: UserCreateOneWithoutProgressionesInput!
+  manga: MangaCreateOneWithoutProgressionInput
+}
+
+type ProgressionEdge {
+  node: Progression!
   cursor: String!
 }
 
-enum ProgressOrderByInput {
+enum ProgressionOrderByInput {
   id_ASC
   id_DESC
   avancement_ASC
   avancement_DESC
 }
 
-type ProgressPreviousValues {
+type ProgressionPreviousValues {
   id: ID!
   avancement: Float!
 }
 
-input ProgressScalarWhereInput {
+input ProgressionScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -564,105 +850,137 @@ input ProgressScalarWhereInput {
   avancement_lte: Float
   avancement_gt: Float
   avancement_gte: Float
-  AND: [ProgressScalarWhereInput!]
-  OR: [ProgressScalarWhereInput!]
-  NOT: [ProgressScalarWhereInput!]
+  AND: [ProgressionScalarWhereInput!]
+  OR: [ProgressionScalarWhereInput!]
+  NOT: [ProgressionScalarWhereInput!]
 }
 
-type ProgressSubscriptionPayload {
+type ProgressionSubscriptionPayload {
   mutation: MutationType!
-  node: Progress
+  node: Progression
   updatedFields: [String!]
-  previousValues: ProgressPreviousValues
+  previousValues: ProgressionPreviousValues
 }
 
-input ProgressSubscriptionWhereInput {
+input ProgressionSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: ProgressWhereInput
-  AND: [ProgressSubscriptionWhereInput!]
-  OR: [ProgressSubscriptionWhereInput!]
-  NOT: [ProgressSubscriptionWhereInput!]
+  node: ProgressionWhereInput
+  AND: [ProgressionSubscriptionWhereInput!]
+  OR: [ProgressionSubscriptionWhereInput!]
+  NOT: [ProgressionSubscriptionWhereInput!]
 }
 
-input ProgressUpdateInput {
+input ProgressionUpdateInput {
   avancement: Float
-  video: VideoUpdateOneRequiredWithoutProgressInput
-  user: UserUpdateOneRequiredWithoutProgressesInput
+  video: VideoUpdateOneWithoutProgressionInput
+  user: UserUpdateOneRequiredWithoutProgressionesInput
+  manga: MangaUpdateOneWithoutProgressionInput
 }
 
-input ProgressUpdateManyDataInput {
-  avancement: Float
-}
-
-input ProgressUpdateManyMutationInput {
+input ProgressionUpdateManyDataInput {
   avancement: Float
 }
 
-input ProgressUpdateManyWithoutUserInput {
-  create: [ProgressCreateWithoutUserInput!]
-  delete: [ProgressWhereUniqueInput!]
-  connect: [ProgressWhereUniqueInput!]
-  set: [ProgressWhereUniqueInput!]
-  disconnect: [ProgressWhereUniqueInput!]
-  update: [ProgressUpdateWithWhereUniqueWithoutUserInput!]
-  upsert: [ProgressUpsertWithWhereUniqueWithoutUserInput!]
-  deleteMany: [ProgressScalarWhereInput!]
-  updateMany: [ProgressUpdateManyWithWhereNestedInput!]
-}
-
-input ProgressUpdateManyWithoutVideoInput {
-  create: [ProgressCreateWithoutVideoInput!]
-  delete: [ProgressWhereUniqueInput!]
-  connect: [ProgressWhereUniqueInput!]
-  set: [ProgressWhereUniqueInput!]
-  disconnect: [ProgressWhereUniqueInput!]
-  update: [ProgressUpdateWithWhereUniqueWithoutVideoInput!]
-  upsert: [ProgressUpsertWithWhereUniqueWithoutVideoInput!]
-  deleteMany: [ProgressScalarWhereInput!]
-  updateMany: [ProgressUpdateManyWithWhereNestedInput!]
-}
-
-input ProgressUpdateManyWithWhereNestedInput {
-  where: ProgressScalarWhereInput!
-  data: ProgressUpdateManyDataInput!
-}
-
-input ProgressUpdateWithoutUserDataInput {
+input ProgressionUpdateManyMutationInput {
   avancement: Float
-  video: VideoUpdateOneRequiredWithoutProgressInput
 }
 
-input ProgressUpdateWithoutVideoDataInput {
+input ProgressionUpdateManyWithoutMangaInput {
+  create: [ProgressionCreateWithoutMangaInput!]
+  delete: [ProgressionWhereUniqueInput!]
+  connect: [ProgressionWhereUniqueInput!]
+  set: [ProgressionWhereUniqueInput!]
+  disconnect: [ProgressionWhereUniqueInput!]
+  update: [ProgressionUpdateWithWhereUniqueWithoutMangaInput!]
+  upsert: [ProgressionUpsertWithWhereUniqueWithoutMangaInput!]
+  deleteMany: [ProgressionScalarWhereInput!]
+  updateMany: [ProgressionUpdateManyWithWhereNestedInput!]
+}
+
+input ProgressionUpdateManyWithoutUserInput {
+  create: [ProgressionCreateWithoutUserInput!]
+  delete: [ProgressionWhereUniqueInput!]
+  connect: [ProgressionWhereUniqueInput!]
+  set: [ProgressionWhereUniqueInput!]
+  disconnect: [ProgressionWhereUniqueInput!]
+  update: [ProgressionUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ProgressionUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ProgressionScalarWhereInput!]
+  updateMany: [ProgressionUpdateManyWithWhereNestedInput!]
+}
+
+input ProgressionUpdateManyWithoutVideoInput {
+  create: [ProgressionCreateWithoutVideoInput!]
+  delete: [ProgressionWhereUniqueInput!]
+  connect: [ProgressionWhereUniqueInput!]
+  set: [ProgressionWhereUniqueInput!]
+  disconnect: [ProgressionWhereUniqueInput!]
+  update: [ProgressionUpdateWithWhereUniqueWithoutVideoInput!]
+  upsert: [ProgressionUpsertWithWhereUniqueWithoutVideoInput!]
+  deleteMany: [ProgressionScalarWhereInput!]
+  updateMany: [ProgressionUpdateManyWithWhereNestedInput!]
+}
+
+input ProgressionUpdateManyWithWhereNestedInput {
+  where: ProgressionScalarWhereInput!
+  data: ProgressionUpdateManyDataInput!
+}
+
+input ProgressionUpdateWithoutMangaDataInput {
   avancement: Float
-  user: UserUpdateOneRequiredWithoutProgressesInput
+  video: VideoUpdateOneWithoutProgressionInput
+  user: UserUpdateOneRequiredWithoutProgressionesInput
 }
 
-input ProgressUpdateWithWhereUniqueWithoutUserInput {
-  where: ProgressWhereUniqueInput!
-  data: ProgressUpdateWithoutUserDataInput!
+input ProgressionUpdateWithoutUserDataInput {
+  avancement: Float
+  video: VideoUpdateOneWithoutProgressionInput
+  manga: MangaUpdateOneWithoutProgressionInput
 }
 
-input ProgressUpdateWithWhereUniqueWithoutVideoInput {
-  where: ProgressWhereUniqueInput!
-  data: ProgressUpdateWithoutVideoDataInput!
+input ProgressionUpdateWithoutVideoDataInput {
+  avancement: Float
+  user: UserUpdateOneRequiredWithoutProgressionesInput
+  manga: MangaUpdateOneWithoutProgressionInput
 }
 
-input ProgressUpsertWithWhereUniqueWithoutUserInput {
-  where: ProgressWhereUniqueInput!
-  update: ProgressUpdateWithoutUserDataInput!
-  create: ProgressCreateWithoutUserInput!
+input ProgressionUpdateWithWhereUniqueWithoutMangaInput {
+  where: ProgressionWhereUniqueInput!
+  data: ProgressionUpdateWithoutMangaDataInput!
 }
 
-input ProgressUpsertWithWhereUniqueWithoutVideoInput {
-  where: ProgressWhereUniqueInput!
-  update: ProgressUpdateWithoutVideoDataInput!
-  create: ProgressCreateWithoutVideoInput!
+input ProgressionUpdateWithWhereUniqueWithoutUserInput {
+  where: ProgressionWhereUniqueInput!
+  data: ProgressionUpdateWithoutUserDataInput!
 }
 
-input ProgressWhereInput {
+input ProgressionUpdateWithWhereUniqueWithoutVideoInput {
+  where: ProgressionWhereUniqueInput!
+  data: ProgressionUpdateWithoutVideoDataInput!
+}
+
+input ProgressionUpsertWithWhereUniqueWithoutMangaInput {
+  where: ProgressionWhereUniqueInput!
+  update: ProgressionUpdateWithoutMangaDataInput!
+  create: ProgressionCreateWithoutMangaInput!
+}
+
+input ProgressionUpsertWithWhereUniqueWithoutUserInput {
+  where: ProgressionWhereUniqueInput!
+  update: ProgressionUpdateWithoutUserDataInput!
+  create: ProgressionCreateWithoutUserInput!
+}
+
+input ProgressionUpsertWithWhereUniqueWithoutVideoInput {
+  where: ProgressionWhereUniqueInput!
+  update: ProgressionUpdateWithoutVideoDataInput!
+  create: ProgressionCreateWithoutVideoInput!
+}
+
+input ProgressionWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -687,12 +1005,13 @@ input ProgressWhereInput {
   avancement_gte: Float
   video: VideoWhereInput
   user: UserWhereInput
-  AND: [ProgressWhereInput!]
-  OR: [ProgressWhereInput!]
-  NOT: [ProgressWhereInput!]
+  manga: MangaWhereInput
+  AND: [ProgressionWhereInput!]
+  OR: [ProgressionWhereInput!]
+  NOT: [ProgressionWhereInput!]
 }
 
-input ProgressWhereUniqueInput {
+input ProgressionWhereUniqueInput {
   id: ID
 }
 
@@ -700,9 +1019,12 @@ type Query {
   display(where: DisplayWhereUniqueInput!): Display
   displays(where: DisplayWhereInput, orderBy: DisplayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Display]!
   displaysConnection(where: DisplayWhereInput, orderBy: DisplayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DisplayConnection!
-  progress(where: ProgressWhereUniqueInput!): Progress
-  progresses(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progress]!
-  progressesConnection(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProgressConnection!
+  manga(where: MangaWhereUniqueInput!): Manga
+  mangas(where: MangaWhereInput, orderBy: MangaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Manga]!
+  mangasConnection(where: MangaWhereInput, orderBy: MangaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MangaConnection!
+  progression(where: ProgressionWhereUniqueInput!): Progression
+  progressions(where: ProgressionWhereInput, orderBy: ProgressionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progression]!
+  progressionsConnection(where: ProgressionWhereInput, orderBy: ProgressionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProgressionConnection!
   season(where: SeasonWhereUniqueInput!): Season
   seasons(where: SeasonWhereInput, orderBy: SeasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Season]!
   seasonsConnection(where: SeasonWhereInput, orderBy: SeasonOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SeasonConnection!
@@ -723,6 +1045,9 @@ type Season {
   name: String
   description: String
   episodes(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video!]
+  mangas(where: MangaWhereInput, orderBy: MangaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Manga!]
+  url: String
+  chapterCount: Int
 }
 
 type SeasonConnection {
@@ -736,6 +1061,9 @@ input SeasonCreateInput {
   name: String
   description: String
   episodes: VideoCreateManyWithoutSeasonInput
+  mangas: MangaCreateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
 }
 
 input SeasonCreateManyInput {
@@ -748,10 +1076,27 @@ input SeasonCreateOneWithoutEpisodesInput {
   connect: SeasonWhereUniqueInput
 }
 
+input SeasonCreateOneWithoutMangasInput {
+  create: SeasonCreateWithoutMangasInput
+  connect: SeasonWhereUniqueInput
+}
+
 input SeasonCreateWithoutEpisodesInput {
   id: ID
   name: String
   description: String
+  mangas: MangaCreateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
+}
+
+input SeasonCreateWithoutMangasInput {
+  id: ID
+  name: String
+  description: String
+  episodes: VideoCreateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
 }
 
 type SeasonEdge {
@@ -766,12 +1111,18 @@ enum SeasonOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  url_ASC
+  url_DESC
+  chapterCount_ASC
+  chapterCount_DESC
 }
 
 type SeasonPreviousValues {
   id: ID!
   name: String
   description: String
+  url: String
+  chapterCount: Int
 }
 
 input SeasonScalarWhereInput {
@@ -817,6 +1168,28 @@ input SeasonScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  chapterCount: Int
+  chapterCount_not: Int
+  chapterCount_in: [Int!]
+  chapterCount_not_in: [Int!]
+  chapterCount_lt: Int
+  chapterCount_lte: Int
+  chapterCount_gt: Int
+  chapterCount_gte: Int
   AND: [SeasonScalarWhereInput!]
   OR: [SeasonScalarWhereInput!]
   NOT: [SeasonScalarWhereInput!]
@@ -844,17 +1217,25 @@ input SeasonUpdateDataInput {
   name: String
   description: String
   episodes: VideoUpdateManyWithoutSeasonInput
+  mangas: MangaUpdateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
 }
 
 input SeasonUpdateInput {
   name: String
   description: String
   episodes: VideoUpdateManyWithoutSeasonInput
+  mangas: MangaUpdateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
 }
 
 input SeasonUpdateManyDataInput {
   name: String
   description: String
+  url: String
+  chapterCount: Int
 }
 
 input SeasonUpdateManyInput {
@@ -872,11 +1253,20 @@ input SeasonUpdateManyInput {
 input SeasonUpdateManyMutationInput {
   name: String
   description: String
+  url: String
+  chapterCount: Int
 }
 
 input SeasonUpdateManyWithWhereNestedInput {
   where: SeasonScalarWhereInput!
   data: SeasonUpdateManyDataInput!
+}
+
+input SeasonUpdateOneRequiredWithoutMangasInput {
+  create: SeasonCreateWithoutMangasInput
+  update: SeasonUpdateWithoutMangasDataInput
+  upsert: SeasonUpsertWithoutMangasInput
+  connect: SeasonWhereUniqueInput
 }
 
 input SeasonUpdateOneWithoutEpisodesInput {
@@ -891,6 +1281,17 @@ input SeasonUpdateOneWithoutEpisodesInput {
 input SeasonUpdateWithoutEpisodesDataInput {
   name: String
   description: String
+  mangas: MangaUpdateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
+}
+
+input SeasonUpdateWithoutMangasDataInput {
+  name: String
+  description: String
+  episodes: VideoUpdateManyWithoutSeasonInput
+  url: String
+  chapterCount: Int
 }
 
 input SeasonUpdateWithWhereUniqueNestedInput {
@@ -901,6 +1302,11 @@ input SeasonUpdateWithWhereUniqueNestedInput {
 input SeasonUpsertWithoutEpisodesInput {
   update: SeasonUpdateWithoutEpisodesDataInput!
   create: SeasonCreateWithoutEpisodesInput!
+}
+
+input SeasonUpsertWithoutMangasInput {
+  update: SeasonUpdateWithoutMangasDataInput!
+  create: SeasonCreateWithoutMangasInput!
 }
 
 input SeasonUpsertWithWhereUniqueNestedInput {
@@ -955,6 +1361,31 @@ input SeasonWhereInput {
   episodes_every: VideoWhereInput
   episodes_some: VideoWhereInput
   episodes_none: VideoWhereInput
+  mangas_every: MangaWhereInput
+  mangas_some: MangaWhereInput
+  mangas_none: MangaWhereInput
+  url: String
+  url_not: String
+  url_in: [String!]
+  url_not_in: [String!]
+  url_lt: String
+  url_lte: String
+  url_gt: String
+  url_gte: String
+  url_contains: String
+  url_not_contains: String
+  url_starts_with: String
+  url_not_starts_with: String
+  url_ends_with: String
+  url_not_ends_with: String
+  chapterCount: Int
+  chapterCount_not: Int
+  chapterCount_in: [Int!]
+  chapterCount_not_in: [Int!]
+  chapterCount_lt: Int
+  chapterCount_lte: Int
+  chapterCount_gt: Int
+  chapterCount_gte: Int
   AND: [SeasonWhereInput!]
   OR: [SeasonWhereInput!]
   NOT: [SeasonWhereInput!]
@@ -962,6 +1393,7 @@ input SeasonWhereInput {
 
 input SeasonWhereUniqueInput {
   id: ID
+  url: String
 }
 
 type Serie {
@@ -1121,7 +1553,8 @@ enum Sexe {
 
 type Subscription {
   display(where: DisplaySubscriptionWhereInput): DisplaySubscriptionPayload
-  progress(where: ProgressSubscriptionWhereInput): ProgressSubscriptionPayload
+  manga(where: MangaSubscriptionWhereInput): MangaSubscriptionPayload
+  progression(where: ProgressionSubscriptionWhereInput): ProgressionSubscriptionPayload
   season(where: SeasonSubscriptionWhereInput): SeasonSubscriptionPayload
   serie(where: SerieSubscriptionWhereInput): SerieSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -1141,7 +1574,7 @@ type User {
   preferences(where: DisplayWhereInput, orderBy: DisplayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Display!]
   description: String
   sexe: Sexe
-  progresses(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progress!]
+  Progressiones(where: ProgressionWhereInput, orderBy: ProgressionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progression!]
 }
 
 type UserConnection {
@@ -1161,15 +1594,15 @@ input UserCreateInput {
   preferences: DisplayCreateManyInput
   description: String
   sexe: Sexe
-  progresses: ProgressCreateManyWithoutUserInput
+  Progressiones: ProgressionCreateManyWithoutUserInput
 }
 
-input UserCreateOneWithoutProgressesInput {
-  create: UserCreateWithoutProgressesInput
+input UserCreateOneWithoutProgressionesInput {
+  create: UserCreateWithoutProgressionesInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutProgressesInput {
+input UserCreateWithoutProgressionesInput {
   id: ID
   username: String!
   email: String
@@ -1254,7 +1687,7 @@ input UserUpdateInput {
   preferences: DisplayUpdateManyInput
   description: String
   sexe: Sexe
-  progresses: ProgressUpdateManyWithoutUserInput
+  Progressiones: ProgressionUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1268,14 +1701,14 @@ input UserUpdateManyMutationInput {
   sexe: Sexe
 }
 
-input UserUpdateOneRequiredWithoutProgressesInput {
-  create: UserCreateWithoutProgressesInput
-  update: UserUpdateWithoutProgressesDataInput
-  upsert: UserUpsertWithoutProgressesInput
+input UserUpdateOneRequiredWithoutProgressionesInput {
+  create: UserCreateWithoutProgressionesInput
+  update: UserUpdateWithoutProgressionesDataInput
+  upsert: UserUpsertWithoutProgressionesInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutProgressesDataInput {
+input UserUpdateWithoutProgressionesDataInput {
   username: String
   email: String
   password: String
@@ -1287,9 +1720,9 @@ input UserUpdateWithoutProgressesDataInput {
   sexe: Sexe
 }
 
-input UserUpsertWithoutProgressesInput {
-  update: UserUpdateWithoutProgressesDataInput!
-  create: UserCreateWithoutProgressesInput!
+input UserUpsertWithoutProgressionesInput {
+  update: UserUpdateWithoutProgressionesDataInput!
+  create: UserCreateWithoutProgressionesInput!
 }
 
 input UserWhereInput {
@@ -1422,9 +1855,9 @@ input UserWhereInput {
   sexe_not: Sexe
   sexe_in: [Sexe!]
   sexe_not_in: [Sexe!]
-  progresses_every: ProgressWhereInput
-  progresses_some: ProgressWhereInput
-  progresses_none: ProgressWhereInput
+  Progressiones_every: ProgressionWhereInput
+  Progressiones_some: ProgressionWhereInput
+  Progressiones_none: ProgressionWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -1442,7 +1875,7 @@ type Video {
   url: String!
   display: Display!
   season: Season
-  progress(where: ProgressWhereInput, orderBy: ProgressOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progress!]
+  Progression(where: ProgressionWhereInput, orderBy: ProgressionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Progression!]
 }
 
 type VideoConnection {
@@ -1457,7 +1890,7 @@ input VideoCreateInput {
   url: String!
   display: DisplayCreateOneInput!
   season: SeasonCreateOneWithoutEpisodesInput
-  progress: ProgressCreateManyWithoutVideoInput
+  Progression: ProgressionCreateManyWithoutVideoInput
 }
 
 input VideoCreateManyWithoutSeasonInput {
@@ -1465,12 +1898,12 @@ input VideoCreateManyWithoutSeasonInput {
   connect: [VideoWhereUniqueInput!]
 }
 
-input VideoCreateOneWithoutProgressInput {
-  create: VideoCreateWithoutProgressInput
+input VideoCreateOneWithoutProgressionInput {
+  create: VideoCreateWithoutProgressionInput
   connect: VideoWhereUniqueInput
 }
 
-input VideoCreateWithoutProgressInput {
+input VideoCreateWithoutProgressionInput {
   id: ID
   name: String!
   url: String!
@@ -1483,7 +1916,7 @@ input VideoCreateWithoutSeasonInput {
   name: String!
   url: String!
   display: DisplayCreateOneInput!
-  progress: ProgressCreateManyWithoutVideoInput
+  Progression: ProgressionCreateManyWithoutVideoInput
 }
 
 type VideoEdge {
@@ -1577,7 +2010,7 @@ input VideoUpdateInput {
   url: String
   display: DisplayUpdateOneRequiredInput
   season: SeasonUpdateOneWithoutEpisodesInput
-  progress: ProgressUpdateManyWithoutVideoInput
+  Progression: ProgressionUpdateManyWithoutVideoInput
 }
 
 input VideoUpdateManyDataInput {
@@ -1607,14 +2040,16 @@ input VideoUpdateManyWithWhereNestedInput {
   data: VideoUpdateManyDataInput!
 }
 
-input VideoUpdateOneRequiredWithoutProgressInput {
-  create: VideoCreateWithoutProgressInput
-  update: VideoUpdateWithoutProgressDataInput
-  upsert: VideoUpsertWithoutProgressInput
+input VideoUpdateOneWithoutProgressionInput {
+  create: VideoCreateWithoutProgressionInput
+  update: VideoUpdateWithoutProgressionDataInput
+  upsert: VideoUpsertWithoutProgressionInput
+  delete: Boolean
+  disconnect: Boolean
   connect: VideoWhereUniqueInput
 }
 
-input VideoUpdateWithoutProgressDataInput {
+input VideoUpdateWithoutProgressionDataInput {
   name: String
   url: String
   display: DisplayUpdateOneRequiredInput
@@ -1625,7 +2060,7 @@ input VideoUpdateWithoutSeasonDataInput {
   name: String
   url: String
   display: DisplayUpdateOneRequiredInput
-  progress: ProgressUpdateManyWithoutVideoInput
+  Progression: ProgressionUpdateManyWithoutVideoInput
 }
 
 input VideoUpdateWithWhereUniqueWithoutSeasonInput {
@@ -1633,9 +2068,9 @@ input VideoUpdateWithWhereUniqueWithoutSeasonInput {
   data: VideoUpdateWithoutSeasonDataInput!
 }
 
-input VideoUpsertWithoutProgressInput {
-  update: VideoUpdateWithoutProgressDataInput!
-  create: VideoCreateWithoutProgressInput!
+input VideoUpsertWithoutProgressionInput {
+  update: VideoUpdateWithoutProgressionDataInput!
+  create: VideoCreateWithoutProgressionInput!
 }
 
 input VideoUpsertWithWhereUniqueWithoutSeasonInput {
@@ -1689,9 +2124,9 @@ input VideoWhereInput {
   url_not_ends_with: String
   display: DisplayWhereInput
   season: SeasonWhereInput
-  progress_every: ProgressWhereInput
-  progress_some: ProgressWhereInput
-  progress_none: ProgressWhereInput
+  Progression_every: ProgressionWhereInput
+  Progression_some: ProgressionWhereInput
+  Progression_none: ProgressionWhereInput
   AND: [VideoWhereInput!]
   OR: [VideoWhereInput!]
   NOT: [VideoWhereInput!]

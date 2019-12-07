@@ -1,0 +1,12 @@
+mutation UpsertManga ($name: String!, $url: String!, $season: String!) {
+    upsertManga(
+        where: { url: $url }
+        create: {
+            url: $url
+            name: $name
+            season: { connect: { url: $season } }
+        }
+        update: {}
+    ) { id }
+
+}

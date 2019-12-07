@@ -1,0 +1,9 @@
+query SeasonProgression($userID: ID!, $progressURL: String!, $type: String!) {
+    seasonProgression(data: {
+        type: $type
+        userID: $userID
+        progressURL: $progressURL
+    }){
+        progression
+    }
+}

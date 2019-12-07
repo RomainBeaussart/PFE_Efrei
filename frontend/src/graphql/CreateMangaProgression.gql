@@ -1,0 +1,7 @@
+mutation CreateMangaProgression($userID: ID!, $mangaURL: String!){
+    createProgression(data: {
+        user: { connect: { id: $userID } }
+        manga: { connect: { url: $mangaURL } }
+        avancement: 0
+    }){ id }
+}

@@ -1,0 +1,10 @@
+mutation UpsertMangaReading ($avancement: Float!, $id: ID!) {
+    updateProgression (
+        where: {
+            id: $id
+        }
+        data: {
+            avancement: $avancement
+        }
+    ){ id }
+}

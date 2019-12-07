@@ -1,0 +1,15 @@
+query Progression($userID: ID!, $url: String!) {
+    progressions(
+        where: {
+            user: {
+                id: $userID
+            }
+            manga: {
+                url: $url
+            }
+        }
+    ) {
+        id
+        avancement
+    }
+}
