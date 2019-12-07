@@ -62,6 +62,7 @@ export default class Manga extends Vue {
 
     async getAPI(){
         const result = await search(this.search)
+        this.progresses = {}
         this.mangas = result.data.results
         this.mangas.forEach(async (manga) => {
             let progress = await this.$apollo.query({

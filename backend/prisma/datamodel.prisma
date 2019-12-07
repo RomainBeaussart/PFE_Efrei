@@ -70,6 +70,7 @@ type Season {
     mangas: [Manga!] @relation(name: "SeasonManga")
     url: String @unique
     chapterCount: Int
+    display: Display @relation(name: "SeasonDisplay")
 }
 
 type Progression {
