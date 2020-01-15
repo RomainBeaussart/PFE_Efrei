@@ -11,13 +11,13 @@ module.exports = {
         devtool: 'source-map'
     },
 
-    css: {
-        loaderOptions: {
-            sass: {
-                data: `@import "~@/sass/main.scss"`,
-            },
-        },
-    },
+    // css: {
+    //     loaderOptions: {
+    //         sass: {
+    //             data: `@import "~@/sass/main.scss"`,
+    //         },
+    //     },
+    // },
 
     pluginOptions: {
     }
